@@ -7,6 +7,10 @@ import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 import CONFIG from '../config'
+import {
+  getAccessibleRandomPosts,
+  getRandomPostPath
+} from './random-post.helper'
 
 /**
  * 顶部英雄区
@@ -64,13 +68,19 @@ function BannerGroup(props) {
 function Banner(props) {
   const router = useRouter()
   const { allNavPages } = props
+  const randomPosts = getAccessibleRandomPosts(allNavPages)
   /**
    * 随机跳转文章
    */
   function handleClickBanner() {
-    const randomIndex = Math.floor(Math.random() * allNavPages.length)
-    const randomPost = allNavPages[randomIndex]
-    router.push(`${siteConfig('SUB_PATH', '')}/${randomPost?.slug}`)
+    if (!randomPosts.length) return
+
+    const randomIndex = Math.floor(Math.random() * randomPosts.length)
+    const randomPost = randomPosts[randomIndex]
+    const randomPath = getRandomPostPath(randomPost, siteConfig('SUB_PATH', ''))
+    if (!randomPath) return
+
+    router.push(randomPath)
   }
 
   // 遮罩文字
