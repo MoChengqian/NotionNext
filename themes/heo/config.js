@@ -19,13 +19,13 @@ const CONFIG = {
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '莫承潜',
   HEO_HERO_TITLE_2: '个人博客',
-  HEO_HERO_TITLE_3: '记录学习、设计与生活',
+  HEO_HERO_TITLE_3: '记录学习、经验、成长',
   HEO_HERO_TITLE_4: '欢迎来到',
-  HEO_HERO_TITLE_5: 'MoChengqian',
+  HEO_HERO_TITLE_5: '我的世界!',
   HEO_HERO_TITLE_LINK: 'https://github.com/MoChengqian',
 
   // 英雄区遮罩文字
-  HEO_HERO_COVER_TITLE: '随便逛逛',
+  HEO_HERO_COVER_TITLE: '随机看一篇',
 
   // 英雄区显示三个置顶分类
   HEO_HERO_CATEGORY_1: { title: '随笔', url: '/tag/随笔' },
