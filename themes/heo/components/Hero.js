@@ -245,7 +245,12 @@ function TopGroup(props) {
                   priority={index === 0}
                   className='h-24 object-cover'
                   alt={p?.title}
-                  src={p?.pageCoverThumbnail || siteInfo?.pageCover}
+                  src={
+                    getPostCover(p) ||
+                    siteConfig('HERO_RECOMMEND_COVER', null, CONFIG) ||
+                    siteInfo?.pageCover ||
+                    '/bg_image.jpg'
+                  }
                 />
                 <div className='group-hover:text-indigo-600 dark:group-hover:text-yellow-600 line-clamp-2 overflow-hidden m-2 font-semibold'>
                   {p?.title}
@@ -260,7 +265,7 @@ function TopGroup(props) {
         })}
       </div>
       {/* 一个大的跳转文章卡片 */}
-      <TodayCard cRef={todayCardRef} siteInfo={siteInfo} />
+      <TodayCard cRef={todayCardRef} siteInfo={siteInfo} topPosts={topPosts} />
     </div>
   )
 }
@@ -316,10 +321,15 @@ function getTopPosts({ latestPosts, allNavPages }) {
  * 英雄区右侧，今日卡牌
  * @returns
  */
-function TodayCard({ cRef, siteInfo }) {
+function TodayCard({ cRef, siteInfo, topPosts }) {
   const router = useRouter()
   const link = siteConfig('HEO_HERO_TITLE_LINK', null, CONFIG)
   const { locale } = useGlobal()
+  const cardCover =
+    getTopPostsFirstCover(topPosts) ||
+    siteConfig('HERO_RECOMMEND_COVER', null, CONFIG) ||
+    siteInfo?.pageCover ||
+    '/bg_image.jpg'
   // 卡牌是否盖住下层
   const [isCoverUp, setIsCoverUp] = useState(true)
 
@@ -396,7 +406,7 @@ function TodayCard({ cRef, siteInfo }) {
         {/* 封面图 */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={siteConfig('HERO_RECOMMEND_COVER', siteInfo?.pageCover, CONFIG)}
+          src={cardCover}
           id='today-card-cover'
           className={`${
             isCoverUp ? '' : ' pointer-events-none'
@@ -405,6 +415,16 @@ function TodayCard({ cRef, siteInfo }) {
       </div>
     </div>
   )
+}
+
+function getPostCover(post) {
+  return post?.pageCoverThumbnail || post?.pageCover || ''
+}
+
+function getTopPostsFirstCover(topPosts) {
+  if (!Array.isArray(topPosts)) return ''
+  const post = topPosts.find(item => getPostCover(item))
+  return getPostCover(post)
 }
 
 export default Hero
