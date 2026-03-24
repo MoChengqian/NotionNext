@@ -17,9 +17,8 @@ function isDangerousOrExternalPath(path) {
 export function isAccessibleRandomPost(post) {
   if (!post) return false
 
-  // 某些精简数据结构可能不带 type/status；带了就必须满足 Post + Published
-  if (post.type && post.type !== 'Post') return false
-  if (post.status && post.status !== 'Published') return false
+  if (post.type !== 'Post') return false
+  if (post.status !== 'Published') return false
 
   const slug = typeof post.slug === 'string' ? post.slug.trim() : ''
   const href = typeof post.href === 'string' ? post.href.trim() : ''
@@ -42,4 +41,3 @@ export function getRandomPostPath(post, subPath = '') {
   const normalizedPath = raw.startsWith('/') ? raw : `/${raw}`
   return `${subPath || ''}${normalizedPath}`.replace(/\/{2,}/g, '/')
 }
-
