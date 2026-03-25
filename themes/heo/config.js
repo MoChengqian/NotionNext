@@ -22,7 +22,7 @@ const CONFIG = {
   HEO_HERO_TITLE_3: '记录学习、经验、成长',
   HEO_HERO_TITLE_4: '欢迎来到',
   HEO_HERO_TITLE_5: '我的世界!',
-  HEO_HERO_TITLE_LINK: 'https://github.com/MoChengqian',
+  HEO_HERO_TITLE_LINK: 'https://notion-next-iota-amber-43.vercel.app/article/0',
 
   // 英雄区遮罩文字
   HEO_HERO_COVER_TITLE: '随机看一篇',
@@ -45,11 +45,11 @@ const CONFIG = {
   ],
 
   // 个人资料底部按钮
-  //HEO_INFO_CARD_URL1: '/about',
-  //HEO_INFO_CARD_ICON1: 'fas fa-user',
+  HEO_INFO_CARD_URL1: '/about',
+  HEO_INFO_CARD_ICON1: 'fas fa-user',
   HEO_INFO_CARD_URL2: 'https://github.com/MoChengqian',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  //HEO_INFO_CARD_URL3: 'https://github.com/MoChengqian',
+  HEO_INFO_CARD_URL3: 'https://notion-next-iota-amber-43.vercel.app/article/0',
   //HEO_INFO_CARD_TEXT3: 'GitHub',
 
   // 用户技能图标
