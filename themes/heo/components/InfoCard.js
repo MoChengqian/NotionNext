@@ -12,7 +12,7 @@ export function InfoCard(props) {
   const profileName = siteConfig('AUTHOR')
   const stack = siteConfig(
     'HEO_INFO_CARD_STACK',
-    'Go / Backend / System Design',
+    'AI与全栈开发工程师',
     CONFIG
   )
   const intro = siteConfig(

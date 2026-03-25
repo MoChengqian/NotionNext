@@ -184,42 +184,49 @@ function GroupMenu() {
   const url_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.url || ''
   const title_3 = siteConfig('HEO_HERO_CATEGORY_3', {}, CONFIG)?.title || ''
 
+  const categoryEntries = [
+    {
+      href: url_1,
+      title: title_1,
+      icon: 'fa-solid fa-microchip',
+      iconClass: 'bg-blue-50 text-blue-600 border-blue-100',
+      dotClass: 'bg-blue-200'
+    },
+    {
+      href: url_2,
+      title: title_2,
+      icon: 'fa-solid fa-leaf',
+      iconClass: 'bg-teal-50 text-teal-600 border-teal-100',
+      dotClass: 'bg-teal-200'
+    },
+    {
+      href: url_3,
+      title: title_3,
+      icon: 'fa-solid fa-pen-nib',
+      iconClass: 'bg-slate-100 text-slate-600 border-slate-200',
+      dotClass: 'bg-slate-300'
+    }
+  ]
+
   return (
-    <div className='h-[165px] select-none xl:h-20 flex flex-col justify-between xl:space-y-0 xl:flex-row w-28 lg:w-48 xl:w-full xl:flex-nowrap xl:space-x-3'>
-      <SmartLink
-        href={url_1}
-        className='group relative overflow-hidden bg-gradient-to-r from-blue-500 to-blue-400 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
-        <div className='font-bold lg:text-lg  pl-5 relative -mt-2'>
-          {title_1}
-          <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
-        </div>
-        <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
-          <i className='fa-solid fa-star text-4xl'></i>
-        </div>
-      </SmartLink>
-      <SmartLink
-        href={url_2}
-        className='group relative overflow-hidden bg-gradient-to-r from-red-500 to-yellow-500 flex h-20 justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
-        <div className='font-bold lg:text-lg pl-5 relative -mt-2'>
-          {title_2}
-          <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
-        </div>
-        <div className='hidden lg:block absolute right-6  duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
-          <i className='fa-solid fa-fire-flame-curved text-4xl'></i>
-        </div>
-      </SmartLink>
-      {/* 第三个标签在小屏上不显示 */}
-      <SmartLink
-        href={url_3}
-        className='group relative overflow-hidden bg-gradient-to-r from-teal-300 to-cyan-300 hidden h-20 xl:flex justify-start items-center text-white rounded-xl xl:hover:w-1/2 xl:w-1/3 transition-all duration-500 ease-in'>
-        <div className='font-bold text-lg pl-5 relative -mt-2'>
-          {title_3}
-          <span className='absolute -bottom-0.5 left-5 w-5 h-0.5 bg-white rounded-full'></span>
-        </div>
-        <div className='absolute right-6 duration-700 ease-in-out transition-all scale-[2] translate-y-6 rotate-12 opacity-20 group-hover:opacity-80 group-hover:scale-100 group-hover:translate-y-0 group-hover:rotate-0'>
-          <i className='fa-solid fa-book-bookmark text-4xl '></i>
-        </div>
-      </SmartLink>
+    <div className='w-full select-none grid grid-cols-1 gap-2 xl:grid-cols-3 xl:gap-3'>
+      {categoryEntries.map(({ href, title, icon, iconClass, dotClass }) => (
+        <SmartLink
+          key={title}
+          href={href}
+          className='group h-16 xl:h-20 rounded-xl border border-slate-200 bg-white/95 shadow-sm px-4 flex items-center justify-between transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-slate-300'>
+          <div className='flex items-center gap-3'>
+            <div
+              className={`w-8 h-8 rounded-lg border flex items-center justify-center text-sm ${iconClass}`}>
+              <i className={icon}></i>
+            </div>
+            <div className='text-sm lg:text-base font-semibold text-slate-700 tracking-wide'>
+              {title}
+            </div>
+          </div>
+          <div className={`w-1.5 h-1.5 rounded-full ${dotClass}`}></div>
+        </SmartLink>
+      ))}
     </div>
   )
 }
