@@ -31,8 +31,8 @@ const DarkModeButton = (props) => {
     htmlElement.classList?.add(newStatus ? 'dark' : 'light')
   }
 
-  return <div onClick={handleChangeDarkMode} className={`${className || ''} flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border border-transparent text-slate-600 transition-colors duration-200 hover:border-slate-200 hover:bg-slate-50 hover:text-blue-600`}>
-    <div id='darkModeButton' className='w-5 h-5'> {isDarkMode ? <Sun /> : <Moon />}</div>
+  return <div onClick={handleChangeDarkMode} className={`${className || ''} cursor-pointer hover: scale-100 hover:bg-black hover:bg-opacity-10 rounded-full w-10 h-10 flex justify-center items-center duration-200 transition-all`}>
+    <div id='darkModeButton' className=' cursor-pointer hover: scale-50 w-10 h-10 '> {isDarkMode ? <Sun /> : <Moon />}</div>
   </div>
 }
 export default DarkModeButton

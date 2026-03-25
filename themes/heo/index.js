@@ -32,6 +32,7 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Hero from './components/Hero'
 import LatestPostsGroup from './components/LatestPostsGroup'
+import { NoticeBar } from './components/NoticeBar'
 import PostAdjacent from './components/PostAdjacent'
 import PostCopyright from './components/PostCopyright'
 import PostHeader from './components/PostHeader'
@@ -43,7 +44,6 @@ import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
 import ArticleExpirationNotice from '@/components/ArticleExpirationNotice'
-import { getCategoryMeta } from './components/tech-visual'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -57,12 +57,6 @@ const LayoutBase = props => {
   // 全屏模式下的最大宽度
   const { fullWidth, isDarkMode } = useGlobal()
   const router = useRouter()
-  const HEO_HERO_BODY_REVERSE = siteConfig(
-    'HEO_HERO_BODY_REVERSE',
-    false,
-    CONFIG
-  )
-  const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
 
   const headerSlot = (
     <header>
@@ -72,6 +66,7 @@ const LayoutBase = props => {
       {/* 通知横幅 */}
       {router.route === '/' ? (
         <>
+          <NoticeBar />
           <Hero {...props} />
         </>
       ) : null}
@@ -85,6 +80,13 @@ const LayoutBase = props => {
 
   const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
 
+  const HEO_HERO_BODY_REVERSE = siteConfig(
+    'HEO_HERO_BODY_REVERSE',
+    false,
+    CONFIG
+  )
+  const HEO_LOADING_COVER = siteConfig('HEO_LOADING_COVER', true, CONFIG)
+
   // 加载wow动画
   useEffect(() => {
     loadWowJS()
@@ -93,7 +95,7 @@ const LayoutBase = props => {
   return (
     <div
       id='theme-heo'
-      className={`${siteConfig('FONT_STYLE')} bg-[#f3f5f8] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
+      className={`${siteConfig('FONT_STYLE')} bg-[#f7f9fe] dark:bg-[#18171d] h-full min-h-screen flex flex-col scroll-smooth`}>
       <Style />
 
       {/* 顶部嵌入 导航栏，首页放hero，文章页放文章详情 */}
@@ -425,33 +427,26 @@ const LayoutCategoryIndex = props => {
 
   return (
     <div id='category-outer-wrapper' className='mt-8 px-5 md:px-0'>
-      <div className='mb-2 text-3xl font-semibold text-slate-900'>
+      <div className='text-4xl font-extrabold dark:text-gray-200 mb-5'>
         {locale.COMMON.CATEGORY}
       </div>
-      <div className='mb-8 text-sm text-slate-500'>
-        Browse posts by focused topic.
-      </div>
-      <div id='category-list' className='grid gap-4 sm:grid-cols-2 lg:grid-cols-3'>
+      <div
+        id='category-list'
+        className='duration-200 flex flex-wrap m-10 justify-center'>
         {categoryOptions?.map(category => {
-          const meta = getCategoryMeta(category.name)
           return (
             <SmartLink
               key={category.name}
-              href={`/category/${encodeURIComponent(category.name)}`}
+              href={`/category/${category.name}`}
               passHref
               legacyBehavior>
               <div
-                className='group flex cursor-pointer items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-sm'>
-                <div>
-                  <div className='flex items-center gap-2 text-slate-800'>
-                    <i className={`${meta.icon} text-xs`} />
-                    <span className='text-lg font-medium'>{category.name}</span>
-                  </div>
-                  <div className='mt-1 text-[11px] uppercase tracking-[0.14em] text-slate-500'>
-                    {meta.label}
-                  </div>
-                </div>
-                <div className='rounded-md border border-slate-200 bg-slate-50 px-2 py-1 text-sm text-slate-600'>
+                className={
+                  'group mr-5 mb-5 flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                }>
+                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
+                {category.name}
+                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
                   {category.count}
                 </div>
               </div>
@@ -474,25 +469,26 @@ const LayoutTagIndex = props => {
 
   return (
     <div id='tag-outer-wrapper' className='px-5 mt-8 md:px-0'>
-      <div className='mb-2 text-3xl font-semibold text-slate-900'>
+      <div className='text-4xl font-extrabold dark:text-gray-200 mb-5'>
         {locale.COMMON.TAGS}
       </div>
-      <div className='mb-8 text-sm text-slate-500'>
-        Lightweight index for quick navigation.
-      </div>
-      <div id='tag-list' className='flex flex-wrap gap-3'>
+      <div
+        id='tag-list'
+        className='duration-200 flex flex-wrap space-x-5 space-y-5 m-10 justify-center'>
         {tagOptions.map(tag => {
           return (
             <SmartLink
               key={tag.name}
-              href={`/tag/${encodeURIComponent(tag.name)}`}
+              href={`/tag/${tag.name}`}
               passHref
               legacyBehavior>
               <div
-                className='group flex cursor-pointer items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600'>
-                <HashTag className='h-4 w-4 stroke-slate-400 stroke-2' />
-                <span>{tag.name}</span>
-                <div className='rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs text-slate-500'>
+                className={
+                  'group flex flex-nowrap items-center border bg-white text-2xl rounded-xl dark:hover:text-white px-4 cursor-pointer py-3 hover:text-white hover:bg-indigo-600 transition-all hover:scale-110 duration-150'
+                }>
+                <HashTag className={'w-5 h-5 stroke-gray-500 stroke-2'} />
+                {tag.name}
+                <div className='bg-[#f1f3f8] ml-1 px-2 rounded-lg group-hover:text-indigo-600 '>
                   {tag.count}
                 </div>
               </div>

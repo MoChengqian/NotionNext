@@ -3,12 +3,13 @@ const CONFIG = {
   HEO_LOADING_COVER: true, // 页面加载的遮罩动画
 
   HEO_HOME_BANNER_ENABLE: true,
-  HEO_NOTICE_BAR_ENABLE: false, // 首页欢迎通知条
 
   HEO_SITE_CREATE_TIME: '2026-03-24', // 建站日期，用于计算网站运行的第几天
 
   // 首页顶部通知条滚动内容，如不需要可以留空 []
-  HEO_NOTICE_BAR: [],
+  HEO_NOTICE_BAR: [
+    { title: '欢迎来到莫承潜的博客', url: 'https://github.com/MoChengqian' }
+  ],
 
   // 英雄区左右侧组件颠倒位置
   HEO_HERO_REVERSE: false,
@@ -17,21 +18,19 @@ const CONFIG = {
 
   // 英雄区(首页顶部大卡)
   HEO_HERO_TITLE_1: '莫承潜',
-  HEO_HERO_TITLE_2: 'Tech Notes',
-  HEO_HERO_TITLE_3: '记录技术、思考与成长',
-  HEO_HERO_INTRO:
-    'Build, Learn, Write. Focused on Go backend engineering and system design.',
-  HEO_HERO_TITLE_4: 'Engineering Journal',
-  HEO_HERO_TITLE_5: 'Build, Learn, Write.',
+  HEO_HERO_TITLE_2: '个人博客',
+  HEO_HERO_TITLE_3: '记录学习、经验、成长',
+  HEO_HERO_TITLE_4: '欢迎来到',
+  HEO_HERO_TITLE_5: '我的世界!',
   HEO_HERO_TITLE_LINK: 'https://notion-next-iota-amber-43.vercel.app/article/0',
 
   // 英雄区遮罩文字
-  HEO_HERO_COVER_TITLE: 'Latest Writings',
+  HEO_HERO_COVER_TITLE: '随机看一篇',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '技术', url: '/category/技术' },
-  HEO_HERO_CATEGORY_2: { title: '生活', url: '/category/生活' },
-  HEO_HERO_CATEGORY_3: { title: '随笔', url: '/category/随笔' },
+  HEO_HERO_CATEGORY_1: { title: '随笔', url: '/tag/随笔' },
+  HEO_HERO_CATEGORY_2: { title: '技术', url: '/tag/技术' },
+  HEO_HERO_CATEGORY_3: { title: '生活', url: '/tag/生活' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
   HEO_HERO_RECOMMEND_POST_TAG: '推荐',
@@ -39,16 +38,18 @@ const CONFIG = {
   HERO_RECOMMEND_COVER: '/images/hero-mountain.png', // 英雄区右侧图片
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
-  HEO_INFOCARD_GREETINGS: ['你好，我是莫承潜', '记录技术、思考与成长'],
-  HEO_INFO_CARD_STACK: 'Go / Backend / System Design',
-  HEO_INFO_CARD_INTRO: '专注后端工程、系统设计与长期主义写作。',
+  HEO_INFOCARD_GREETINGS: [
+    '你好！我是莫承潜',
+    '你赢了兄弟',
+    '记录学习、设计与生活'
+  ],
 
   // 个人资料底部按钮
   //HEO_INFO_CARD_URL1: '/about',
   //HEO_INFO_CARD_ICON1: 'fas fa-user',
   HEO_INFO_CARD_URL2: 'https://github.com/MoChengqian',
   HEO_INFO_CARD_ICON2: 'fab fa-github',
-  HEO_INFO_CARD_URL3: '/about',
+  HEO_INFO_CARD_URL3: 'https://notion-next-iota-amber-43.vercel.app/article/0',
   //HEO_INFO_CARD_TEXT3: 'GitHub',
 
   // 用户技能图标

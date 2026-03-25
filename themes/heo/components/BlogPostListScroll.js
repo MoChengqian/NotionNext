@@ -32,7 +32,7 @@ const BlogPostListScroll = ({
 
   const handleGetMore = () => {
     if (!hasMore) return
-    updatePage(prevPage => prevPage + 1)
+    updatePage(page + 1)
   }
 
   // 监听滚动自动分页加载
@@ -67,7 +67,8 @@ const BlogPostListScroll = ({
       <div id='container' ref={targetRef} className='w-full'>
         {/* 文章列表 */}
         <div
-          className={`${POST_TWO_COLS && '2xl:grid 2xl:grid-cols-2'} grid-cols-1 gap-4`}>
+          className={`${POST_TWO_COLS && '2xl:grid 2xl:grid-cols-2'} grid-cols-1 gap-5`}>
+          {' '}
           {postsToShow.map(post => (
             <BlogPostCard
               key={post.id}
@@ -84,8 +85,9 @@ const BlogPostListScroll = ({
             onClick={() => {
               handleGetMore()
             }}
-            className='w-full my-5 rounded-xl border border-slate-200 bg-white py-3 text-center text-sm cursor-pointer text-slate-600 transition-colors hover:border-blue-200 hover:text-blue-600'>
-            {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE}`}
+            className='w-full my-4 py-4 text-center cursor-pointer rounded-xl dark:text-gray-200'>
+            {' '}
+            {hasMore ? locale.COMMON.MORE : `${locale.COMMON.NO_MORE}`}{' '}
           </div>
         </div>
       </div>

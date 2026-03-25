@@ -12,11 +12,11 @@ const Footer = () => {
   const BEI_AN_LINK = siteConfig('BEI_AN_LINK')
   const BIO = siteConfig('BIO')
   return (
-    <footer className='relative m-auto flex w-full flex-shrink-0 justify-center bg-white text-center text-sm leading-6 text-slate-600'>
+    <footer className='relative flex-shrink-0 bg-white dark:bg-[#1a191d] justify-center text-center m-auto w-full leading-6  text-gray-600 dark:text-gray-100 text-sm'>
       {/* 颜色过度区 */}
       <div
         id='color-transition'
-        className='h-24 bg-gradient-to-b from-[#f3f5f8] to-white'
+        className='h-32 bg-gradient-to-b from-[#f7f9fe] to-white  dark:bg-[#1a191d] dark:from-inherit dark:to-inherit'
       />
 
       {/* 社交按钮 */}
@@ -29,14 +29,14 @@ const Footer = () => {
       {/* 底部页面信息 */}
       <div
         id='footer-bottom'
-        className='flex h-20 w-full flex-col items-center justify-between border-t border-slate-200 bg-slate-50 p-3 px-6 lg:flex-row'>
+        className='w-full h-20 flex flex-col p-3 lg:flex-row justify-between px-6 items-center bg-[#f1f3f7] dark:bg-[#21232A] border-t dark:border-t-[#3D3D3F]'>
         <div id='footer-bottom-left' className='text-center lg:text-start'>
           <PoweredBy />
           <div className='flex gap-x-1'>
             <CopyRightDate />
             <a
               href={'/about'}
-              className='font-semibold underline'>
+              className='underline font-semibold dark:text-gray-300 '>
               {siteConfig('AUTHOR')}
             </a>
             {BIO && <span className='mx-1'> | {BIO}</span>}

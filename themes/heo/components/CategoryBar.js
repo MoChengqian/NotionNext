@@ -5,59 +5,59 @@ import { useRouter } from 'next/router'
 import { useRef, useState } from 'react'
 
 /**
- * Category filter strip above post list
+ * 博客列表上方嵌入条
+ * @param {*} props
+ * @returns
  */
 export default function CategoryBar(props) {
   const { categoryOptions, border = true } = props
   const { locale } = useGlobal()
   const [scrollRight, setScrollRight] = useState(false)
+  // 创建一个ref引用
   const categoryBarItemsRef = useRef(null)
 
+  // 点击#right时，滚动#category-bar-items到最右边
   const handleToggleScroll = () => {
-    if (!categoryBarItemsRef.current) return
-
-    const { scrollWidth, clientWidth } = categoryBarItemsRef.current
-    categoryBarItemsRef.current.scrollLeft = scrollRight
-      ? 0
-      : scrollWidth - clientWidth
-    setScrollRight(!scrollRight)
+    if (categoryBarItemsRef.current) {
+      const { scrollWidth, clientWidth } = categoryBarItemsRef.current
+      if (scrollRight) {
+        categoryBarItemsRef.current.scrollLeft = 0
+      } else {
+        categoryBarItemsRef.current.scrollLeft = scrollWidth - clientWidth
+      }
+      setScrollRight(!scrollRight)
+    }
   }
 
   return (
     <div
       id='category-bar'
-      className={`wow fadeInUp mb-5 flex flex-nowrap items-center justify-between gap-2 rounded-xl bg-white px-3 py-2 ${
-        border ? 'border border-slate-200' : ''
-      }`}>
+      className={`wow fadeInUp flex flex-nowrap justify-between items-center h-12 mb-4 space-x-2 w-full lg:bg-white dark:lg:bg-[#1e1e1e]  
+            ${border ? 'lg:border lg:hover:border dark:lg:border-gray-800 hover:border-indigo-600 dark:hover:border-yellow-600 ' : ''}  py-2 lg:px-2 rounded-xl transition-colors duration-200`}>
       <div
         id='category-bar-items'
         ref={categoryBarItemsRef}
-        className='scroll-hidden scroll-smooth flex max-w-4xl flex-nowrap items-center overflow-x-scroll'>
-        <MenuItem href='/' name={locale.NAV.INDEX} isHome />
-        {categoryOptions?.map((category, index) => (
-          <MenuItem
-            key={`${category.name}-${index}`}
-            href={`/category/${encodeURIComponent(category.name)}`}
-            name={category.name}
-          />
+        className='scroll-smooth max-w-4xl rounded-lg scroll-hidden flex justify-start flex-nowrap items-center overflow-x-scroll'>
+        <MenuItem href='/' name={locale.NAV.INDEX} />
+        {categoryOptions?.map((c, index) => (
+          <MenuItem key={index} href={`/category/${c.name}`} name={c.name} />
         ))}
       </div>
 
-      <div id='category-bar-next' className='flex items-center justify-center gap-2'>
-        <button
-          type='button'
-          className='flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900'
+      <div id='category-bar-next' className='flex items-center justify-center'>
+        <div
+          id='right'
+          className='cursor-pointer mx-2 dark:text-gray-300 dark:hover:text-yellow-600 hover:text-indigo-600'
           onClick={handleToggleScroll}>
           {scrollRight ? (
-            <ChevronDoubleLeft className='h-4 w-4' />
+            <ChevronDoubleLeft className={'w-5 h-5'} />
           ) : (
-            <ChevronDoubleRight className='h-4 w-4' />
+            <ChevronDoubleRight className={'w-5 h-5'} />
           )}
-        </button>
-
+        </div>
         <SmartLink
           href='/category'
-          className='whitespace-nowrap rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-blue-200 hover:text-blue-600'>
+          className='whitespace-nowrap font-bold text-gray-900 dark:text-white transition-colors duration-200 hover:text-indigo-600 dark:hover:text-yellow-600'>
           {locale.MENU.CATEGORY}
         </SmartLink>
       </div>
@@ -65,30 +65,19 @@ export default function CategoryBar(props) {
   )
 }
 
-const MenuItem = ({ href, name, isHome = false }) => {
+/**
+ * 按钮
+ * @param {*} param0
+ * @returns
+ */
+const MenuItem = ({ href, name }) => {
   const router = useRouter()
-  const rawCategory =
-    typeof router.query?.category === 'string' ? router.query.category : ''
-
-  let currentCategory = rawCategory
-  try {
-    currentCategory = decodeURIComponent(rawCategory)
-  } catch (error) {
-    currentCategory = rawCategory
-  }
-
-  const isHomePath = router.asPath === '/'
-  const selected = isHome ? isHomePath : currentCategory === name
-
+  const { category } = router.query
+  const selected = category === name
   return (
-    <SmartLink
-      href={href}
-      className={`mr-2 whitespace-nowrap rounded-lg px-3 py-1.5 text-sm transition-colors ${
-        selected
-          ? 'border border-blue-200 bg-blue-50 font-medium text-blue-700'
-          : 'border border-transparent text-slate-600 hover:border-slate-200 hover:bg-slate-50 hover:text-slate-900'
-      }`}>
-      {name}
-    </SmartLink>
+    <div
+      className={`whitespace-nowrap mr-2 duration-200 transition-all font-bold px-2 py-0.5 rounded-md text-gray-900 dark:text-white hover:text-white hover:bg-indigo-600 dark:hover:bg-yellow-600 ${selected ? 'text-white bg-indigo-600 dark:bg-yellow-600' : ''}`}>
+      <SmartLink href={href}>{name}</SmartLink>
+    </div>
   )
 }

@@ -16,25 +16,18 @@ export const MenuListTop = props => {
       show: siteConfig('HEO_MENU_INDEX', null, CONFIG)
     },
     {
+      id: 2,
+      icon: 'fas fa-search',
+      name: locale.NAV.SEARCH,
+      href: '/search',
+      show: siteConfig('HEO_MENU_SEARCH', null, CONFIG)
+    },
+    {
       id: 3,
       icon: 'fas fa-archive',
       name: locale.NAV.ARCHIVE,
       href: '/archive',
       show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG)
-    },
-    {
-      id: 4,
-      icon: 'fas fa-th-large',
-      name: locale.MENU.CATEGORY,
-      href: '/category',
-      show: siteConfig('HEO_MENU_CATEGORY', null, CONFIG)
-    },
-    {
-      id: 5,
-      icon: 'fas fa-tags',
-      name: locale.MENU.TAGS,
-      href: '/tag',
-      show: siteConfig('HEO_MENU_TAG', null, CONFIG)
     }
   ]
 
