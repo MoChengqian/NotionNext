@@ -51,7 +51,6 @@ export default function LatestPostsGroupMini({ latestPosts = [], siteInfo }) {
                   : 'text-slate-700 hover:text-blue-600'
               }`}>
               <div className='line-clamp-2 leading-5'>{post.title}</div>
-              <div className='mt-1 text-xs text-slate-400'>{post.lastEditedDay}</div>
             </div>
           </SmartLink>
         )
