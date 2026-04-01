@@ -19,6 +19,77 @@ const hasTag = (post, tag) =>
   Array.isArray(post?.tags) &&
   post.tags.some(item => normalizeText(item) === normalizeText(tag))
 
+const firstNonEmpty = values =>
+  values.find(value => {
+    if (Array.isArray(value)) return value.length > 0
+    if (typeof value === 'object' && value) return Object.keys(value).length > 0
+    return Boolean(String(value || '').trim())
+  })
+
+const pickExtField = (ext = {}, keys = []) =>
+  firstNonEmpty(keys.map(key => ext?.[key]))
+
+const normalizeLinks = rawLinks => {
+  if (!rawLinks) {
+    return []
+  }
+
+  if (Array.isArray(rawLinks)) {
+    return rawLinks
+      .map(item => {
+        if (typeof item === 'string') {
+          return {
+            title: item.startsWith('http') ? '相关链接' : item,
+            href: item.startsWith('http') ? item : null
+          }
+        }
+
+        if (item?.href || item?.url) {
+          return {
+            title: item?.title || item?.name || '相关链接',
+            href: item?.href || item?.url
+          }
+        }
+
+        return null
+      })
+      .filter(item => item?.title)
+  }
+
+  if (typeof rawLinks === 'object') {
+    return Object.entries(rawLinks)
+      .map(([title, href]) => {
+        if (typeof href === 'string') {
+          return {
+            title,
+            href
+          }
+        }
+
+        if (href?.href || href?.url) {
+          return {
+            title: href?.title || title,
+            href: href?.href || href?.url
+          }
+        }
+
+        return null
+      })
+      .filter(item => item?.title)
+  }
+
+  if (typeof rawLinks === 'string') {
+    return [
+      {
+        title: rawLinks.startsWith('http') ? '相关链接' : rawLinks,
+        href: rawLinks.startsWith('http') ? rawLinks : null
+      }
+    ]
+  }
+
+  return []
+}
+
 export const buildPrimaryCategories = (categoryOptions = []) => {
   const categoryMap = new Map(
     categoryOptions.map(category => [category.name, category])
@@ -77,8 +148,32 @@ const calculateMatchScore = (post, matcher = {}) => {
   return score
 }
 
+export const resolveEvidenceType = post => {
+  const matchedType = EVIDENCE_CONFIG.evidenceTypes
+    .map(type => ({
+      ...type,
+      score: calculateMatchScore(post, type)
+    }))
+    .sort((left, right) => right.score - left.score)[0]
+
+  return matchedType?.score > 0 ? matchedType.label : null
+}
+
+export const isPrimaryTrackPost = post =>
+  calculateMatchScore(post, EVIDENCE_CONFIG.primaryTrack) > 0
+
+export const buildHomeFeedPosts = posts => {
+  const allPosts = Array.isArray(posts) ? posts.filter(Boolean) : []
+  const primaryPosts = allPosts.filter(isPrimaryTrackPost)
+
+  return primaryPosts.length >= EVIDENCE_CONFIG.homepage.minimumPrimaryPosts
+    ? primaryPosts
+    : allPosts
+}
+
 const buildPostHighlight = (post, role) => {
-  const meta = [post?.category, ...(post?.tags || []).slice(0, 2)]
+  const evidenceType = resolveEvidenceType(post)
+  const meta = [evidenceType, post?.category, ...(post?.tags || []).slice(0, 1)]
     .filter(Boolean)
     .join(' / ')
 
@@ -147,3 +242,79 @@ export const getRouteDescription = pathname =>
 
 export const getStaticPageConfig = pageKey =>
   EVIDENCE_CONFIG.pages[pageKey] || null
+
+export const buildSidebarTags = (
+  tagOptions = [],
+  names = EVIDENCE_CONFIG.sidebar.tags
+) => {
+  const tagMap = new Map(tagOptions.map(tag => [tag.name, tag]))
+
+  return names.map(name => {
+    const current = tagMap.get(name)
+    return {
+      name,
+      count: current?.count || 0
+    }
+  })
+}
+
+export const buildArticleDigest = post => {
+  const digestEnabled = EVIDENCE_CONFIG.articleDigest?.enabled
+  if (!digestEnabled || post?.type !== 'Post') {
+    return null
+  }
+
+  const ext = post?.ext || {}
+  const evidenceType = resolveEvidenceType(post)
+  const primaryTrack = isPrimaryTrackPost(post)
+
+  const problem = pickExtField(ext, [
+    'problem',
+    'question',
+    'issue',
+    'goal',
+    'context'
+  ])
+  const action = pickExtField(ext, [
+    'action',
+    'actions',
+    'work',
+    'solution',
+    'implementation'
+  ])
+  const result = pickExtField(ext, [
+    'result',
+    'results',
+    'outcome',
+    'impact',
+    'conclusion'
+  ])
+  const links = normalizeLinks(
+    pickExtField(ext, ['links', 'evidenceLinks', 'references', 'artifacts'])
+  )
+
+  if (!problem && !action && !result && !primaryTrack && !evidenceType) {
+    return null
+  }
+
+  const digestLinks =
+    links.length > 0 ? links : EVIDENCE_CONFIG.articleDigest.fallbackLinks
+
+  return {
+    type: evidenceType || 'Engineering Note',
+    problem:
+      problem ||
+      post?.summary ||
+      '围绕一个基础设施后端问题展开，关注机制、边界、代价与可验证结果。',
+    action:
+      action ||
+      `通过${post?.category || '工程实践'}视角拆解问题，并结合源码、实验或治理路径给出可复查过程。`,
+    result:
+      result ||
+      '形成一份可继续复盘、引用或扩展的阶段性工程证据，便于后续在系列文章和开源贡献中继续下钻。',
+    links: digestLinks,
+    tags: [post?.category, evidenceType, ...(post?.tags || []).slice(0, 3)].filter(
+      Boolean
+    )
+  }
+}

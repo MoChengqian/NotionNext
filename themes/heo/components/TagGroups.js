@@ -1,14 +1,14 @@
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { buildFocusTags } from '../evidence.helpers'
+import { buildFocusTags, buildSidebarTags } from '../evidence.helpers'
 
 /**
  * Tag group
  */
-const TagGroups = ({ tags = [], className }) => {
+const TagGroups = ({ tags = [], className, names }) => {
   const router = useRouter()
   const { tag: currentTag } = router.query
-  const focusTags = buildFocusTags(tags)
+  const focusTags = names ? buildSidebarTags(tags, names) : buildFocusTags(tags)
   if (!focusTags || focusTags.length === 0) return <></>
 
   return (

@@ -3,46 +3,48 @@
     margin-bottom: 20px;
 }
 .ai-container {
-    background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
-    border: 1px solid #e8e8e8;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: rgba(248, 250, 252, 0.92);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 16px;
+    box-shadow: none;
     overflow: hidden;
 }
 .ai-header {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-    color: white;
-    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.75);
+    color: #0f172a;
+    padding: 12px 18px;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
 }
 .ai-icon {
     margin-right: 10px;
 }
 .ai-title {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 700;
     flex-grow: 1;
 }
 .ai-tag {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: rgba(15, 23, 42, 0.06);
+    color: #475569;
     padding: 3px 8px;
     border-radius: 12px;
     font-size: 12px;
 }
 .ai-content {
-    padding: 20px;
+    padding: 18px;
 }
 .ai-explanation {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #333;
+    font-size: 15px;
+    line-height: 1.85;
+    color: #334155;
 }
 .blinking-cursor {
     display: inline-block;
     width: 2px;
     height: 20px;
-    background-color: #333;
+    background-color: #64748b;
     animation: blink 0.7s infinite;
     margin-left: 5px;
 }

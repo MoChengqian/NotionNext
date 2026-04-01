@@ -1,26 +1,14 @@
-import Live2D from '@/components/Live2D'
 import Card from './Card'
 import Catalog from './Catalog'
-import CategoryGroup from './CategoryGroup'
 import { InfoCard } from './InfoCard'
-import LatestPostsGroupMini from './LatestPostsGroupMini'
 import TagGroups from './TagGroups'
+import EVIDENCE_CONFIG from '../evidence.config'
 
 /**
  * Right sidebar for desktop
  */
 export default function SideRight(props) {
-  const {
-    post,
-    tagOptions,
-    currentTag,
-    currentCategory,
-    categoryOptions,
-    rightAreaSlot
-  } = props
-
-  const sortedTags = tagOptions?.slice(0, 24) || []
-  const sortedCategories = categoryOptions?.slice(0, 10) || []
+  const { post, tagOptions, currentTag, rightAreaSlot } = props
 
   return (
     <div id='sideRight' className='hidden xl:block w-72 space-y-4 h-full'>
@@ -34,28 +22,20 @@ export default function SideRight(props) {
         )}
 
         <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm'>
-          <LatestPostsGroupMini {...props} />
-        </Card>
-
-        <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm'>
           <div className='mb-3 text-xs uppercase tracking-[0.16em] text-slate-500'>
-            栏目
+            {EVIDENCE_CONFIG.sidebar.title}
           </div>
-          <CategoryGroup
-            currentCategory={currentCategory}
-            categories={sortedCategories}
+          <p className='mb-4 text-sm leading-6 text-slate-600'>
+            {EVIDENCE_CONFIG.sidebar.description}
+          </p>
+          <TagGroups
+            tags={tagOptions || []}
+            currentTag={currentTag}
+            names={EVIDENCE_CONFIG.sidebar.tags}
           />
         </Card>
 
-        <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm'>
-          <div className='mb-3 text-xs uppercase tracking-[0.16em] text-slate-500'>
-            主题词
-          </div>
-          <TagGroups tags={sortedTags} currentTag={currentTag} />
-        </Card>
-
         {rightAreaSlot}
-        <Live2D />
       </div>
     </div>
   )

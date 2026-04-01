@@ -4,6 +4,7 @@ import { siteConfig } from '@/lib/config'
 import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import TagItemMini from './TagItemMini'
+import { resolveEvidenceType } from '../evidence.helpers'
 
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview =
@@ -26,10 +27,14 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     true,
     CONFIG
   )
+  const evidenceType = resolveEvidenceType(post)
+  const topTags = post.tagItems?.slice(0, 3) || []
+  const articleClassName = COVER_HOVER_ENLARGE
+    ? 'hover:transition-all duration-150'
+    : ''
 
   return (
-    <article
-      className={` ${COVER_HOVER_ENLARGE} ? ' hover:transition-all duration-150' : ''}`}>
+    <article className={articleClassName}>
       <div
         data-wow-delay='.2s'
         className={
@@ -58,53 +63,60 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
         <div
           className={
             (POST_TWO_COLS ? '2xl:p-4 2xl:h-48 2xl:w-full' : '') +
-            ' flex p-6  flex-col justify-between h-48 md:h-full w-full md:w-7/12'
+            ' flex p-5 md:p-6 flex-col justify-between h-48 md:h-full w-full md:w-7/12'
           }>
           <header>
-            {/* 分类 */}
-            {post?.category && (
-              <div
-                className={`flex mb-1 items-center ${showPreview ? 'justify-center' : 'justify-start'} hidden md:block flex-wrap dark:text-gray-300 text-gray-600 hover:text-indigo-700 dark:hover:text-yellow-500`}>
+            <div className='mb-3 flex flex-wrap items-center gap-2 text-xs font-medium'>
+              {evidenceType && (
+                <span className='rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 uppercase tracking-[0.12em] text-slate-600'>
+                  {evidenceType}
+                </span>
+              )}
+              {post?.category && (
                 <SmartLink
                   passHref
-                  href={`/category/${post.category}`}
-                  className='cursor-pointer text-xs font-normal menu-link '>
+                  href={`/category/${encodeURIComponent(post.category)}`}
+                  className='inline-flex items-center rounded-full border border-slate-200 px-2.5 py-1 text-slate-500 transition-colors hover:border-slate-300 hover:text-slate-900'>
                   {post.category}
                 </SmartLink>
-              </div>
-            )}
+              )}
+              {post?.publishDay && (
+                <span className='text-slate-400'>{post.publishDay}</span>
+              )}
+            </div>
 
             {/* 标题和图标 */}
             <SmartLink
               href={post?.href}
               passHref
               className={
-                ' group-hover:text-indigo-700 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100  line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'
+                'group-hover:text-slate-900 dark:hover:text-yellow-700 dark:group-hover:text-yellow-600 text-black dark:text-gray-100 line-clamp-2 replace cursor-pointer text-xl font-extrabold leading-tight'
               }>
               {siteConfig('POST_TITLE_ICON') && (
                 <NotionIcon
-                icon={post.pageIcon}
-                className="heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]" // 专门为 Heo 主题的图标设置样式
-              />
+                  icon={post.pageIcon}
+                  className='heo-icon w-6 h-6 mr-1 align-middle transform translate-y-[-8%]'
+                />
               )}
               <span className='menu-link '>{post.title}</span>
             </SmartLink>
+
+            {post?.summary && (
+              <p className='mt-3 line-clamp-2 text-sm leading-6 text-slate-600 dark:text-gray-300'>
+                {post.summary}
+              </p>
+            )}
           </header>
 
-          {/* 摘要 */}
-          {(!showPreview || showSummary) && (
-            <main className='line-clamp-2 replace text-gray-700  dark:text-gray-300 text-sm font-light leading-tight'>
-              {post.summary}
-            </main>
-          )}
-
-          <div className='md:flex-nowrap flex-wrap md:justify-start inline-block'>
-            <div>
-              {' '}
-              {post.tagItems?.map(tag => (
-                <TagItemMini key={tag.name} tag={tag} />
-              ))}
-            </div>
+          <div className='flex flex-wrap gap-2'>
+            {topTags.map(tag => (
+              <TagItemMini key={tag.name} tag={tag} />
+            ))}
+            {post.tagItems?.length > topTags.length && (
+              <span className='inline-flex items-center rounded-lg border border-dashed border-slate-200 px-2 py-1 text-xs text-slate-400'>
+                +{post.tagItems.length - topTags.length}
+              </span>
+            )}
           </div>
         </div>
       </div>

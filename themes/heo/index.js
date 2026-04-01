@@ -14,7 +14,6 @@ import LoadingCover from '@/components/LoadingCover'
 import replaceSearchResult from '@/components/Mark'
 import NotionPage from '@/components/NotionPage'
 import ShareBar from '@/components/ShareBar'
-import WWAds from '@/components/WWAds'
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { loadWowJS } from '@/lib/plugins/wow'
@@ -25,6 +24,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
 import EvidenceHome from './components/EvidenceHome'
+import EvidenceDigest from './components/EvidenceDigest'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
 import CategoryBar from './components/CategoryBar'
@@ -45,7 +45,12 @@ import CONFIG from './config'
 import { Style } from './style'
 import AISummary from '@/components/AISummary'
 import ArticleExpirationNotice from '@/components/ArticleExpirationNotice'
-import { buildFocusTags, buildPrimaryCategories } from './evidence.helpers'
+import {
+  buildFocusTags,
+  buildHomeFeedPosts,
+  buildPrimaryCategories
+} from './evidence.helpers'
+import EVIDENCE_CONFIG from './evidence.config'
 
 /**
  * 基础布局 采用上中下布局，移动端使用顶部侧边导航栏
@@ -148,27 +153,37 @@ const LayoutBase = props => {
  * @returns
  */
 const LayoutIndex = props => {
+  const allHomePosts = buildHomeFeedPosts(props.allNavPages || props.posts || [])
+  const postsPerPage = siteConfig('POSTS_PER_PAGE', 12, props.NOTION_CONFIG)
+  const listStyle = siteConfig('POST_LIST_STYLE')
+  const homeFeedProps = {
+    ...props,
+    posts:
+      listStyle === 'page' ? allHomePosts.slice(0, postsPerPage) : allHomePosts,
+    postCount: allHomePosts.length
+  }
+
   return (
     <div id='post-outer-wrapper' className='px-5 md:px-0'>
       <EvidenceHome {...props} />
-      <section className='space-y-4'>
+      <section className='space-y-4 pt-2'>
         <div className='px-1'>
           <div className='text-xs uppercase tracking-[0.16em] text-slate-500'>
-            时间线更新
+            首页结构
           </div>
           <h2 className='mt-1 text-2xl font-semibold text-slate-900'>
-            最新文章
+            {EVIDENCE_CONFIG.homepage.feedTitle}
           </h2>
           <p className='mt-2 max-w-3xl text-sm leading-6 text-slate-600'>
-            保留按时间线持续阅读的体验。重点入口在前，更新流仍然在后，方便继续判断是否在稳定积累。
+            {EVIDENCE_CONFIG.homepage.feedDescription}
           </p>
         </div>
         <CategoryBar {...props} />
       </section>
       {siteConfig('POST_LIST_STYLE') === 'page' ? (
-        <BlogPostListPage {...props} />
+        <BlogPostListPage {...homeFeedProps} />
       ) : (
-        <BlogPostListScroll {...props} />
+        <BlogPostListScroll {...homeFeedProps} />
       )}
     </div>
   )
@@ -316,7 +331,7 @@ const LayoutSlug = props => {
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''}  bg-white dark:bg-[#18171d] dark:border-gray-600 lg:hover:shadow lg:border rounded-2xl lg:px-2 lg:py-4 `}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} bg-white dark:bg-[#18171d] dark:border-gray-600 lg:border rounded-2xl lg:px-2 lg:py-4`}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
@@ -329,24 +344,24 @@ const LayoutSlug = props => {
               itemType='https://schema.org/Movie'>
               {/* Notion文章主体 */}
               <section
-                className='wow fadeInUp p-5 justify-center mx-auto'
+                className='wow fadeInUp p-5 justify-center mx-auto space-y-4'
                 data-wow-delay='.2s'>
                 <ArticleExpirationNotice post={post} />
                 <AISummary aiSummary={post.aiSummary} />
-                <WWAds orientation='horizontal' className='w-full' />
+                <EvidenceDigest post={post} />
                 {post && <NotionPage post={post} />}
-                <WWAds orientation='horizontal' className='w-full' />
               </section>
 
               {/* 上一篇\下一篇文章 */}
               <PostAdjacent {...props} />
 
-              {/* 分享 */}
-              <ShareBar post={post} />
               {post?.type === 'Post' && (
-                <div className='px-5'>
+                <div className='px-5 pb-2'>
                   {/* 版权 */}
                   <PostCopyright {...props} />
+                  <div className='mt-4 border-t border-dashed border-slate-200 pt-4 dark:border-gray-700'>
+                    <ShareBar post={post} />
+                  </div>
                   {/* 文章推荐 */}
                   <PostRecommend {...props} />
                 </div>

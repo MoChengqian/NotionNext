@@ -23,7 +23,10 @@ const CONFIG = {
   HEO_HERO_TITLE_4: '先看路径',
   HEO_HERO_TITLE_5: '再下钻内容',
   HEO_HERO_TITLE_LINK: '/interview-reading',
-  HEO_HERO_STATEMENT: EVIDENCE_CONFIG.hero.statement,
+  HEO_HERO_EYEBROW: EVIDENCE_CONFIG.hero.eyebrow,
+  HEO_HERO_TITLE: EVIDENCE_CONFIG.hero.title,
+  HEO_HERO_SUBTITLE: EVIDENCE_CONFIG.hero.subtitle,
+  HEO_HERO_STATEMENT: EVIDENCE_CONFIG.hero.title,
   HEO_HERO_KEYWORDS: EVIDENCE_CONFIG.hero.keywords,
   HEO_HERO_ACTIONS: EVIDENCE_CONFIG.hero.actions,
   HEO_HERO_PANEL_TITLE: EVIDENCE_CONFIG.hero.panelTitle,
@@ -44,9 +47,9 @@ const CONFIG = {
 
   // 右侧个人资料卡牌欢迎语，点击可自动切换
   HEO_INFOCARD_GREETINGS: [
-    '你好，我是莫承潜',
-    '关注网关、治理、可观测与稳定性',
-    '这里优先展示工程证据，而不是泛推荐'
+    '莫承潜',
+    '平台后端 / 基础设施后端',
+    '工程证据优先于泛化表达'
   ],
   HEO_INFO_CARD_STACK: EVIDENCE_CONFIG.infoCard.stack,
   HEO_INFO_CARD_INTRO: EVIDENCE_CONFIG.infoCard.intro,
@@ -148,12 +151,12 @@ const CONFIG = {
   HEO_POST_LIST_PREVIEW: false, // 读取文章预览
   HEO_POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
 
-  HEO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
+  HEO_ARTICLE_ADJACENT: false, // 显示上一篇下一篇文章推荐
   HEO_ARTICLE_COPYRIGHT: true, // 显示文章版权声明
   HEO_ARTICLE_NOT_BY_AI: false, // 显示非AI写作
-  HEO_ARTICLE_RECOMMEND: true, // 文章关联推荐
+  HEO_ARTICLE_RECOMMEND: false, // 文章关联推荐
 
-  HEO_WIDGET_LATEST_POSTS: true, // 显示最新文章卡
+  HEO_WIDGET_LATEST_POSTS: false, // 显示最新文章卡
   HEO_WIDGET_ANALYTICS: false, // 显示统计卡
   HEO_WIDGET_TO_TOP: true,
   HEO_WIDGET_TO_COMMENT: true, // 跳到评论区

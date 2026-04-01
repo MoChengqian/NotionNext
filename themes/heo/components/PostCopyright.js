@@ -24,16 +24,20 @@ export default function PostCopyright() {
   }
 
   return (
-    <section className='dark:text-gray-300 mt-6 mx-1 '>
-      <ul className='overflow-x-auto whitespace-nowrap text-sm dark:bg-gray-900 bg-gray-100 p-5 leading-8 border-l-2 border-indigo-500'>
+    <section className='dark:text-gray-300 mt-6 mx-1'>
+      <ul className='overflow-x-auto text-sm rounded-xl border border-slate-200 bg-slate-50 p-5 leading-8 text-slate-600 dark:border-gray-700 dark:bg-[#202026] dark:text-gray-300'>
         <li>
-          <strong className='mr-2'>{locale.COMMON.AUTHOR}:</strong>
+          <strong className='mr-2 text-slate-900 dark:text-white'>
+            {locale.COMMON.AUTHOR}:
+          </strong>
           <SmartLink href={'/about'} className='hover:underline'>
             {siteConfig('AUTHOR')}
           </SmartLink>
         </li>
         <li>
-          <strong className='mr-2'>{locale.COMMON.URL}:</strong>
+          <strong className='mr-2 text-slate-900 dark:text-white'>
+            {locale.COMMON.URL}:
+          </strong>
           <a
             className='whitespace-normal break-words hover:underline'
             href={path}>
@@ -41,7 +45,9 @@ export default function PostCopyright() {
           </a>
         </li>
         <li>
-          <strong className='mr-2'>{locale.COMMON.COPYRIGHT}:</strong>
+          <strong className='mr-2 text-slate-900 dark:text-white'>
+            {locale.COMMON.COPYRIGHT}:
+          </strong>
           {locale.COMMON.COPYRIGHT_NOTICE}
         </li>
         {siteConfig('HEO_ARTICLE_NOT_BY_AI', false, CONFIG) && (

@@ -1,11 +1,6 @@
 export const EVIDENCE_CONFIG = {
   githubUrl: 'https://github.com/MoChengqian',
-  noticeBar: [
-    {
-      title: '招聘阅读路径：面试阅读 / 开源贡献 / 系列文章',
-      url: '/interview-reading'
-    }
-  ],
+  noticeBar: [],
   navLinks: [
     { name: '首页', href: '/', show: true },
     { name: '面试阅读', href: '/interview-reading', show: true },
@@ -28,8 +23,10 @@ export const EVIDENCE_CONFIG = {
     '/tag': '主题词索引 · 收敛长期技术词表'
   },
   hero: {
-    statement:
-      '面向平台 / 基础设施后端方向成长，关注网关、服务治理、可观测性与稳定性，并把学习、实验、开源贡献写成可复现、可评审的工程证据。',
+    eyebrow: 'Platform / Infrastructure Backend',
+    title: '平台后端 / 基础设施后端 / 网关治理',
+    subtitle:
+      '主线围绕 Dubbo、Service Governance、Observability、Reliability 与 AI Gateway / LLMOps Bridge，持续沉淀可复现、可评审的工程证据。',
     keywords: [
       'Dubbo',
       'Gateway',
@@ -53,37 +50,30 @@ export const EVIDENCE_CONFIG = {
         title: '系列文章',
         href: '/series',
         variant: 'secondary'
-      },
-      {
-        title: 'GitHub',
-        href: 'https://github.com/MoChengqian',
-        variant: 'ghost',
-        target: '_blank'
       }
     ],
-    panelTitle: '招聘阅读路径',
+    panelTitle: '主线聚焦',
     panelPoints: [
       {
-        title: '先看定位',
-        summary: '用一页说明方向、路线、代表作与推荐阅读顺序。'
+        title: '平台后端',
+        summary: '围绕服务入口、协议栈、注册发现与服务治理建立长期主线。'
       },
       {
-        title: '再看贡献',
-        summary: '把 PR / Issue / Review / 复盘集中到同一入口。'
+        title: '工程证据',
+        summary: '优先展示源码分析、压测实验、开源贡献与技术复盘。'
       },
       {
-        title: '最后下钻',
-        summary: '围绕 Dubbo、网关治理、可观测与稳定性持续展开。'
+        title: 'AI Gateway',
+        summary: '把模型接入治理视为平台入口问题，继续延伸到 LLMOps bridge。'
       }
     ]
   },
   infoCard: {
     stack: 'Platform / Infrastructure Backend',
     intro:
-      '以网关、服务治理、可观测性、稳定性和模型接入治理为主线，把过程沉淀成可复现、可评审的工程证据。',
+      '聚焦网关、服务治理、可观测性、稳定性与 AI Gateway，把过程沉淀成可复现、可评审的工程证据。',
     actions: [
       { title: '面试阅读', href: '/interview-reading' },
-      { title: '开源贡献', href: '/open-source' },
       {
         title: 'GitHub',
         href: 'https://github.com/MoChengqian',
@@ -100,6 +90,8 @@ export const EVIDENCE_CONFIG = {
     '观点与模型'
   ],
   focusTags: [
+    'ai-gateway',
+    'llmops',
     'gateway',
     'service-discovery',
     'metadata',
@@ -118,26 +110,107 @@ export const EVIDENCE_CONFIG = {
     'retry',
     'timeout'
   ],
-  startCards: [
+  homepage: {
+    featuredTitle: '代表证据',
+    featuredDescription:
+      '如果只看三项，先看这里。优先展示能快速验证工程判断、实现过程和结果产出的内容。',
+    seriesTitle: '主题系列',
+    seriesDescription:
+      '主系列服务于长期技术路线，帮助从代表证据继续下钻到问题域和机制层。',
+    feedTitle: '主线文章',
+    feedDescription:
+      '首页优先展示基础设施后端、网关治理、可观测性、稳定性与 AI Gateway 相关内容，其他更新继续通过归档和分类访问。',
+    minimumPrimaryPosts: 3
+  },
+  primaryTrack: {
+    categories: [
+      '证据库',
+      '源码与协议',
+      '流量与服务治理',
+      '可观测性与稳定性',
+      '开源贡献',
+      '观点与模型'
+    ],
+    tags: [
+      'dubbo',
+      'gateway',
+      'observability',
+      'reliability',
+      'tracing',
+      'traffic-governance',
+      'rate-limit',
+      'platform-engineering',
+      'ai-gateway',
+      'llmops'
+    ],
+    keywords: [
+      'dubbo',
+      'gateway',
+      'service governance',
+      'observability',
+      'reliability',
+      'tracing',
+      'traffic',
+      'rate limit',
+      'circuit-breaker',
+      'retry',
+      'timeout',
+      'ai gateway',
+      'llmops',
+      '模型接入'
+    ]
+  },
+  sidebar: {
+    title: '主线主题词',
+    description: '侧栏只保留少量高价值主题词，作为辅助导航而不是主内容。',
+    tags: [
+      'dubbo',
+      'gateway',
+      'observability',
+      'reliability',
+      'tracing',
+      'traffic-governance',
+      'rate-limit',
+      'platform-engineering',
+      'ai-gateway',
+      'llmops'
+    ]
+  },
+  evidenceTypes: [
     {
-      title: '面试阅读',
-      href: '/interview-reading',
-      summary: '先看我是谁、路线怎么展开、代表作品放在哪里。',
-      meta: '路线 / 代表作 / 阅读顺序'
+      label: 'Merged PR',
+      tags: ['dubbo', 'open-source'],
+      keywords: ['pr', 'pull request', 'merged', 'review', 'issue', '开源']
     },
     {
-      title: '开源贡献',
-      href: '/open-source',
-      summary: '集中看 Dubbo 生态中的 PR、Issue、Review 与复盘。',
-      meta: 'PR / Issue / Review / 复盘'
+      label: 'Source Analysis',
+      categories: ['源码与协议'],
+      keywords: ['源码', 'protocol', 'metadata', 'service-discovery', 'dubbo']
     },
     {
-      title: '系列文章',
-      href: '/series',
-      summary: '按主题树继续下钻 Dubbo、网关治理、可观测实验。',
-      meta: '源码 / 治理 / 实验'
+      label: 'Gateway Testing',
+      categories: ['流量与服务治理'],
+      keywords: ['gateway', 'traffic', 'rate-limit', 'timeout', 'retry', '压测']
+    },
+    {
+      label: 'Observability',
+      categories: ['可观测性与稳定性'],
+      keywords: ['observability', 'reliability', 'tracing', 'prometheus', 'otel']
+    },
+    {
+      label: 'AI Gateway',
+      categories: ['观点与模型'],
+      keywords: ['ai gateway', 'llmops', 'model', 'policy', 'token', 'cost']
     }
   ],
+  articleDigest: {
+    enabled: true,
+    fallbackLinks: [
+      { title: '面试阅读', href: '/interview-reading' },
+      { title: '开源贡献', href: '/open-source' },
+      { title: '系列索引', href: '/series' }
+    ]
+  },
   seriesEntries: [
     {
       id: 'dubbo-source',
@@ -211,7 +284,7 @@ export const EVIDENCE_CONFIG = {
         title: '开源贡献证据页',
         href: '/open-source',
         summary: '把 Dubbo 生态中的 PR、Issue、Review 与复盘放在同一阅读链路里。',
-        meta: '静态索引页'
+        meta: 'Merged PR / Review'
       }
     },
     {
@@ -237,7 +310,7 @@ export const EVIDENCE_CONFIG = {
         title: '稳定性实验代表作',
         href: '/series#observability-reliability',
         summary: '优先放压测、故障复盘、稳定性实验与观测链路验证类文章。',
-        meta: '可先从系列入口继续阅读'
+        meta: 'Gateway Testing / Observability'
       }
     },
     {
@@ -260,7 +333,7 @@ export const EVIDENCE_CONFIG = {
         title: '源码分析代表作',
         href: '/series#dubbo-source',
         summary: '优先放 Dubbo / 协议 / 元数据 / 服务发现机制分析类文章。',
-        meta: '可先从系列入口继续阅读'
+        meta: 'Source Analysis'
       }
     },
     {
@@ -283,7 +356,7 @@ export const EVIDENCE_CONFIG = {
         title: '思考型文章代表作',
         href: '/series#perspectives-models',
         summary: '优先放路线取舍、架构判断、AI Gateway 与模型接入治理思考。',
-        meta: '可先从系列入口继续阅读'
+        meta: 'AI Gateway / Engineering Decision'
       }
     }
   ],

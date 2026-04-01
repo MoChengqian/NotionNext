@@ -45,19 +45,19 @@ export function InfoCard(props) {
         </div>
       </div>
 
-      <div className='mt-4 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs font-medium uppercase tracking-[0.12em] text-slate-600'>
+      <div className='mt-4 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600'>
         {stack}
       </div>
 
       <p className='mt-4 text-sm leading-6 text-slate-600'>{intro}</p>
 
-      <div className='mt-5 flex gap-2'>
+      <div className='mt-5 flex flex-wrap gap-2'>
         {actions?.map(action => (
           <SmartLink
             key={action.title}
             href={action.href}
             target={action.target}
-            className='inline-flex items-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-100'>
+            className='inline-flex items-center rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600 transition-colors hover:border-slate-300 hover:bg-slate-100'>
             {action.title}
           </SmartLink>
         ))}
