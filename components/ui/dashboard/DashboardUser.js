@@ -4,7 +4,9 @@ import { UserProfile } from '@clerk/nextjs'
  * @returns
  */
 export default function DashboardUser() {
-  const enableClerk = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+  const enableClerk =
+    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
+    typeof window !== 'undefined'
   if (!enableClerk) {
     return null
   }
