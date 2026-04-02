@@ -71,12 +71,19 @@ const Catalog = ({ toc }) => {
         className='overflow-y-auto max-h-36 lg:max-h-96 overscroll-none scroll-hidden'
         ref={tRef}>
         <nav className='h-full'>
-          {toc?.map(tocItem => {
+          {toc?.map((tocItem, index) => {
+            if (!tocItem?.id) {
+              return null
+            }
+
             const id = uuidToId(tocItem.id)
+            if (!id) {
+              return null
+            }
             tocIds.push(id)
             return (
               <a
-                key={id}
+                key={id || `toc-${index}`}
                 href={`#${id}`}
                 className={`notion-table-of-contents-item duration-300 transform dark:text-gray-200
             notion-table-of-contents-item-indent-level-${tocItem.indentLevel} catalog-item `}>
