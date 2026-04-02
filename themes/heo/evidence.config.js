@@ -664,90 +664,9 @@ export const EVIDENCE_CONFIG = {
       eyebrow: '系列索引',
       title: '系列',
       description:
-        '按主题树组织长期积累，而不是按“热门 / 教程 / 推荐”这类泛入口组织首页内容。',
-      actions: [
-        { title: '面试阅读', href: '/interview-reading' },
-        { title: '开源贡献', href: '/open-source' },
-        { title: '归档', href: '/archive' }
-      ],
-      sections: [
-        {
-          type: 'cards',
-          id: 'dubbo-source',
-          title: 'Dubbo 源码与机制',
-          items: [
-            {
-              title: '协议与调用链',
-              href: '/category/源码与协议',
-              summary: 'Triple / RPC / 协议栈 / 请求处理链路。',
-              meta: '栏目入口'
-            },
-            {
-              title: '元数据与服务发现',
-              href: '/tag/metadata',
-              summary: 'Metadata / Service Discovery / 注册发现与订阅机制。',
-              meta: '主题词入口'
-            }
-          ]
-        },
-        {
-          type: 'cards',
-          id: 'gateway-governance',
-          title: '网关 / 流量治理',
-          items: [
-            {
-              title: '入口治理',
-              href: '/category/流量与服务治理',
-              summary: '路由、分流、鉴权、限流、熔断、重试与超时策略。',
-              meta: '栏目入口'
-            },
-            {
-              title: '治理母题',
-              href: '/tag/traffic-governance',
-              summary: 'traffic-governance / rate-limit / circuit-breaker / retry / timeout。',
-              meta: '主题词入口'
-            }
-          ]
-        },
-        {
-          type: 'cards',
-          id: 'observability-reliability',
-          title: '可观测性 / 稳定性',
-          items: [
-            {
-              title: '观测链路',
-              href: '/category/可观测性与稳定性',
-              summary: 'metrics / tracing / logging / OpenTelemetry / Prometheus。',
-              meta: '栏目入口'
-            },
-            {
-              title: '实验与复盘',
-              href: '/tag/observability',
-              summary: '压测、实验、故障注入、稳定性分析与复盘文章。',
-              meta: '主题词入口'
-            }
-          ]
-        },
-        {
-          type: 'cards',
-          id: 'perspectives-models',
-          title: '观点与模型',
-          items: [
-            {
-              title: '路线判断',
-              href: '/category/观点与模型',
-              summary: '如何选题、如何取舍、如何判断一个方向是否值得继续深入。',
-              meta: '栏目入口'
-            },
-            {
-              title: '模型接入治理',
-              href: '/tag/platform-engineering',
-              summary: 'AI Gateway / Model Routing / Policy / Cost / Reliability 的平台化思考。',
-              meta: '主题词入口'
-            }
-          ]
-        }
-      ]
+        '系列页不再承担入口导航职责，当前仅保留占位路径，避免增加新的阅读分叉。',
+      actions: [],
+      sections: []
     },
     about: {
       slug: 'about',
