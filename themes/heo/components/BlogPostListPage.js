@@ -23,7 +23,7 @@ const BlogPostListPage = ({ page = 1, posts = [], postCount, siteInfo }) => {
     return (
       <div id='container' className='w-full'>
         {/* 文章列表 */}
-        <div className='space-y-2'>
+        <div className='grid grid-cols-1 gap-2 xl:grid-cols-2'>
           {posts?.map(post => (
             <BlogPostCard
               index={posts.indexOf(post)}

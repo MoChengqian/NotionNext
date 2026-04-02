@@ -65,7 +65,7 @@ const BlogPostListScroll = ({
     return (
       <div id='container' ref={targetRef} className='w-full'>
         {/* 文章列表 */}
-        <div className='space-y-2'>
+        <div className='grid grid-cols-1 gap-2 xl:grid-cols-2'>
           {postsToShow.map(post => (
             <BlogPostCard
               key={post.id}
