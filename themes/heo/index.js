@@ -66,10 +66,7 @@ const LayoutBase = props => {
   const router = useRouter()
   const hiddenPostHeaderRoutes = new Set([
     '/interview-reading',
-    '/open-source',
     '/series',
-    '/about',
-    '/about-me'
   ])
   const contentTabRoutes = new Set([
     '/',

@@ -3,12 +3,15 @@ export const EVIDENCE_CONFIG = {
   noticeBar: [],
   navLinks: [
     { name: '首页', href: '/', show: true },
-    { name: '关于我', href: '/about-me', show: true },
+    {
+      name: '关于我',
+      href: 'https://notion-next-iota-amber-43.vercel.app/article/0',
+      show: true
+    },
     { name: '归档', href: '/archive', show: true }
   ],
   routeDescriptions: {
     '/': '默认内容流 · 全部文章 / 主线主题 / 工程证据',
-    '/about-me': '关于我 · 方向、路线与联系方式',
     '/interview-reading': '推荐顺序 · 一页看完当前阅读路径',
     '/series': '系列索引 · 源码 / 治理 / 可观测 / 观点',
     '/archive': '时间线归档 · 按时间回看持续积累'
@@ -61,8 +64,6 @@ export const EVIDENCE_CONFIG = {
       title: '更早文章',
       description: '按时间继续查看更早内容，维持同一套主题流骨架。'
     },
-    categoryIndex: null,
-    tagIndex: null,
     series: {
       eyebrow: 'Series',
       title: '主题系列',
@@ -72,9 +73,7 @@ export const EVIDENCE_CONFIG = {
       eyebrow: 'Interview Reading',
       title: '推荐阅读',
       description: '给读者一个稳定、克制、可验证的阅读起点。'
-    },
-    openSource: null,
-    about: null
+    }
   },
   hero: {
     eyebrow: 'Platform / Infrastructure Backend',
@@ -366,67 +365,6 @@ export const EVIDENCE_CONFIG = {
     }
   ],
   pages: {
-    aboutMe: {
-      slug: 'about-me',
-      eyebrow: '个人说明',
-      title: '关于我',
-      description:
-        '一页集中说明当前方向、技术主线与联系方式，作为更稳定的个人说明入口。',
-      actions: [
-        { title: '推荐顺序', href: '/interview-reading' },
-        { title: '归档', href: '/archive' },
-        {
-          title: 'GitHub',
-          href: 'https://github.com/MoChengqian',
-          target: '_blank'
-        }
-      ],
-      sections: [
-        {
-          type: 'text',
-          id: 'who-am-i',
-          title: '我是谁',
-          paragraphs: [
-            '我目前以平台 / 基础设施后端方向为主线，重点关注网关、服务治理、可观测性、稳定性，以及模型接入治理这一条链路。',
-            '博客不是用来堆泛化教程，而是把学习过程、实验记录、故障复盘和开源参与整理成可复现、可评审的工程证据。'
-          ]
-        },
-        {
-          type: 'text',
-          id: 'roadmap',
-          title: '我的路线',
-          paragraphs: [
-            '路线从 Dubbo / RPC / 服务发现与元数据出发，逐步延伸到网关与流量治理，再进入 tracing、metrics、logging、SLO 等可观测与稳定性主题。',
-            '最近在继续补齐 AI Gateway / Model Routing / Token & Cost Governance / Policy Enforcement 这类模型接入治理问题，目标不是追热点，而是把平台入口的治理链路补完整。'
-          ]
-        },
-        {
-          type: 'cards',
-          id: 'links',
-          title: 'GitHub / 博客 / 联系方式入口',
-          items: [
-            {
-              title: 'GitHub',
-              href: 'https://github.com/MoChengqian',
-              target: '_blank',
-              summary: '代码、贡献记录与仓库入口。',
-              meta: '外部链接'
-            },
-            {
-              title: '博客首页',
-              href: '/',
-              summary: '返回证据系统入口页，按首页路径继续浏览。',
-              meta: '站内入口'
-            },
-            {
-              title: '联系方式（待补充）',
-              summary: '建议后续补充邮箱或 LinkedIn，便于招聘场景直接联系。',
-              meta: '联系入口'
-            }
-          ]
-        }
-      ]
-    },
     interviewReading: {
       slug: 'interview-reading',
       eyebrow: '推荐顺序',
@@ -434,7 +372,11 @@ export const EVIDENCE_CONFIG = {
       description:
         '当前只保留一条稳定的阅读顺序，帮助快速了解先看什么、再看什么。',
       actions: [
-        { title: '关于我', href: '/about-me' },
+        {
+          title: '关于我',
+          href: 'https://notion-next-iota-amber-43.vercel.app/article/0',
+          target: '_blank'
+        },
         { title: '归档', href: '/archive' },
         {
           title: 'GitHub',
@@ -454,7 +396,8 @@ export const EVIDENCE_CONFIG = {
             },
             {
               title: '再看关于我',
-              summary: '进入 /about-me，集中看方向、技术主线和联系方式。'
+              summary:
+                '进入 https://notion-next-iota-amber-43.vercel.app/article/0，集中看方向、技术主线和联系方式。'
             },
             {
               title: '然后看 Dubbo / 网关 / 可观测系列',

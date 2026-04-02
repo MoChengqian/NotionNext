@@ -30,7 +30,9 @@ export default function PostCopyright() {
           <strong className='mr-2 text-slate-900 dark:text-white'>
             {locale.COMMON.AUTHOR}:
           </strong>
-          <SmartLink href={'/about'} className='hover:underline'>
+          <SmartLink
+            href={'https://notion-next-iota-amber-43.vercel.app/article/0'}
+            className='hover:underline'>
             {siteConfig('AUTHOR')}
           </SmartLink>
         </li>

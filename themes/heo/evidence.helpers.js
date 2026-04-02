@@ -333,28 +333,12 @@ export const getPageLeadConfig = ({ pathname, category, tag }) => {
     return EVIDENCE_CONFIG.pageLeads.archive
   }
 
-  if (pathname === '/category') {
-    return EVIDENCE_CONFIG.pageLeads.categoryIndex
-  }
-
-  if (pathname === '/tag') {
-    return EVIDENCE_CONFIG.pageLeads.tagIndex
-  }
-
   if (pathname === '/series') {
     return EVIDENCE_CONFIG.pageLeads.series
   }
 
   if (pathname === '/interview-reading') {
     return EVIDENCE_CONFIG.pageLeads.interviewReading
-  }
-
-  if (pathname === '/open-source') {
-    return EVIDENCE_CONFIG.pageLeads.openSource
-  }
-
-  if (pathname === '/about') {
-    return EVIDENCE_CONFIG.pageLeads.about
   }
 
   if (category) {
