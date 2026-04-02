@@ -3,16 +3,12 @@ export const EVIDENCE_CONFIG = {
   noticeBar: [],
   navLinks: [
     { name: '首页', href: '/', show: true },
-    {
-      name: '关于我',
-      href: 'https://notion-next-iota-amber-43.vercel.app/article/0',
-      show: true
-    },
+    { name: '关于我', href: '/about-me', show: true },
     { name: '归档', href: '/archive', show: true }
   ],
   routeDescriptions: {
     '/': '默认内容流 · 全部文章 / 主线主题 / 工程证据',
-    '/article/0': '关于我 · 方向、路线与联系方式',
+    '/about-me': '关于我 · 方向、路线与联系方式',
     '/interview-reading': '推荐顺序 · 一页看完当前阅读路径',
     '/series': '系列索引 · 源码 / 治理 / 可观测 / 观点',
     '/archive': '时间线归档 · 按时间回看持续积累'
@@ -371,7 +367,7 @@ export const EVIDENCE_CONFIG = {
   ],
   pages: {
     aboutMe: {
-      slug: 'article/0',
+      slug: 'about-me',
       eyebrow: '个人说明',
       title: '关于我',
       description:
@@ -438,7 +434,7 @@ export const EVIDENCE_CONFIG = {
       description:
         '当前只保留一条稳定的阅读顺序，帮助快速了解先看什么、再看什么。',
       actions: [
-        { title: '关于我', href: '/article/0' },
+        { title: '关于我', href: '/about-me' },
         { title: '归档', href: '/archive' },
         {
           title: 'GitHub',
@@ -458,7 +454,7 @@ export const EVIDENCE_CONFIG = {
             },
             {
               title: '再看关于我',
-              summary: '进入 /article/0，集中看方向、技术主线和联系方式。'
+              summary: '进入 /about-me，集中看方向、技术主线和联系方式。'
             },
             {
               title: '然后看 Dubbo / 网关 / 可观测系列',

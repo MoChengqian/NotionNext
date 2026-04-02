@@ -68,7 +68,8 @@ const LayoutBase = props => {
     '/interview-reading',
     '/open-source',
     '/series',
-    '/about'
+    '/about',
+    '/about-me'
   ])
   const contentTabRoutes = new Set([
     '/',
