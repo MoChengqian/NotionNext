@@ -69,7 +69,7 @@ const BLOG = {
   // 欢迎语打字效果,Hexo,Matery主题支持, 英文逗号隔开多个欢迎语。
   GREETING_WORDS:
     process.env.NEXT_PUBLIC_GREETING_WORDS ||
-    'Hi，这里优先展示工程证据,Hi，主线围绕网关与服务治理,Hi，欢迎从面试阅读入口开始',
+    'Hi，这里优先展示工程证据,Hi，主线围绕网关与服务治理,Hi，欢迎从推荐阅读入口开始',
 
   // uuid重定向至 slug
   UUID_REDIRECT: process.env.UUID_REDIRECT || false

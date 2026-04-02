@@ -4,13 +4,9 @@ import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 
 const MenuGroupCard = props => {
-  const { postCount, categoryOptions, tagOptions } = props
+  const { postCount } = props
   const { locale } = useGlobal()
   const archiveSlot = <div className='text-center'>{postCount}</div>
-  const categorySlot = (
-    <div className='text-center'>{categoryOptions?.length}</div>
-  )
-  const tagSlot = <div className='text-center'>{tagOptions?.length}</div>
 
   const links = [
     {
@@ -18,18 +14,6 @@ const MenuGroupCard = props => {
       href: '/archive',
       slot: archiveSlot,
       show: siteConfig('HEO_MENU_ARCHIVE', null, CONFIG)
-    },
-    {
-      name: locale.COMMON.CATEGORY,
-      href: '/category',
-      slot: categorySlot,
-      show: siteConfig('HEO_MENU_CATEGORY', null, CONFIG)
-    },
-    {
-      name: locale.COMMON.TAGS,
-      href: '/tag',
-      slot: tagSlot,
-      show: siteConfig('HEO_MENU_TAG', null, CONFIG)
     }
   ]
 

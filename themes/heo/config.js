@@ -36,8 +36,8 @@ const CONFIG = {
   HEO_HERO_COVER_TITLE: '进入阅读',
 
   // 英雄区显示三个置顶分类
-  HEO_HERO_CATEGORY_1: { title: '面试阅读', url: '/interview-reading' },
-  HEO_HERO_CATEGORY_2: { title: '开源贡献', url: '/open-source' },
+  HEO_HERO_CATEGORY_1: { title: '推荐阅读', url: '/interview-reading' },
+  HEO_HERO_CATEGORY_2: { title: '归档', url: '/archive' },
   HEO_HERO_CATEGORY_3: { title: '系列文章', url: '/series' },
 
   // 英雄区右侧推荐文章标签, 例如 [推荐] , 最多六篇文章; 若留空白''，则推荐最近更新文章
