@@ -23,8 +23,8 @@ const TagGroups = ({ tags = [], className, names }) => {
             href={`/tag/${encodeURIComponent(tag.name)}`}
             className={`inline-flex cursor-pointer items-center gap-1 rounded-lg border px-2.5 py-1 text-xs transition-colors ${
               selected
-                ? 'border-blue-200 bg-blue-50 text-blue-700'
-                : 'border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900'
+                ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-500/40 dark:bg-blue-500/10 dark:text-blue-300'
+                : 'border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900 dark:border-gray-700 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:bg-[#25242b] dark:hover:text-white'
             } ${className || ''}`}>
             <span>{tag.name}</span>
             {tag.count ? <sup>{tag.count}</sup> : null}

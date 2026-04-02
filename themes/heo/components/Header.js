@@ -3,6 +3,7 @@ import { useRef } from 'react'
 import DarkModeButton from './DarkModeButton'
 import Logo from './Logo'
 import { MenuListTop } from './MenuListTop'
+import RandomRecommendedButton from './RandomRecommendedButton'
 import ReadingProgress from './ReadingProgress'
 import SearchButton from './SearchButton'
 import SlideOver from './SlideOver'
@@ -32,6 +33,7 @@ const Header = props => {
 
         <div className='flex flex-shrink-0 justify-end items-center gap-1 md:w-40'>
           <SearchButton {...props} />
+          <RandomRecommendedButton {...props} />
           {!JSON.parse(siteConfig('THEME_SWITCH')) && (
             <div className='hidden md:block'>
               <DarkModeButton {...props} />

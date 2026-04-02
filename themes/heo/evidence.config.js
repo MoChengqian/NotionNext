@@ -45,13 +45,14 @@ export const EVIDENCE_CONFIG = {
     },
     {
       id: 'llm-access-gateway',
-      title: 'LLM Access Gateway',
-      href: '/tag/ai-gateway',
+      title: '自研LLM Access Gateway项目',
+      href: '/tag/gateway',
       match: {
-        categories: ['观点与模型'],
-        tags: ['ai-gateway', 'llmops'],
+        categories: ['流量与服务治理', '观点与模型'],
+        tags: ['gateway'],
         keywords: [
-          'ai gateway',
+          'gateway',
+          'access gateway',
           'llm access gateway',
           'llmops',
           'model',
@@ -203,7 +204,7 @@ export const EVIDENCE_CONFIG = {
   },
   sidebar: {
     title: '主线主题词',
-    description: '侧栏只保留少量高价值主题词，作为辅助导航而不是主内容。',
+    description: '平台后端,努力向模型服务接入与治理基础设施靠近',
     tags: ['dubbo', 'ai-gateway']
   },
   evidenceTypes: [
@@ -409,7 +410,7 @@ export const EVIDENCE_CONFIG = {
               title: '先看关于我'
             },
             {
-              title: '再看推荐文章'
+              title: '再看推荐阅读'
             },
             {
               title: '最后看一眼我的GitHub主页'

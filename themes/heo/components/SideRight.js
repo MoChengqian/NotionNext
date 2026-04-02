@@ -14,11 +14,11 @@ export default function SideRight(props) {
     return (
       <div className='space-y-4'>
         <InfoCard {...props} />
-        <Card className='bg-white border-slate-200 shadow-sm'>
-          <div className='mb-3 text-xs uppercase tracking-[0.16em] text-slate-500'>
+        <Card className='bg-white border-slate-200 shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
+          <div className='mb-3 text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-gray-400'>
             {EVIDENCE_CONFIG.sidebar.title}
           </div>
-          <p className='mb-4 text-sm leading-6 text-slate-600'>
+          <p className='mb-4 text-sm leading-6 text-slate-600 dark:text-gray-300'>
             {EVIDENCE_CONFIG.sidebar.description}
           </p>
           <TagGroups
@@ -37,16 +37,16 @@ export default function SideRight(props) {
 
       <div className='sticky top-20 space-y-4'>
         {post && post.toc && post.toc.length > 0 && (
-          <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm'>
+          <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
             <Catalog toc={post.toc} />
           </Card>
         )}
 
-        <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm'>
-          <div className='mb-3 text-xs uppercase tracking-[0.16em] text-slate-500'>
+        <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
+          <div className='mb-3 text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-gray-400'>
             {EVIDENCE_CONFIG.sidebar.title}
           </div>
-          <p className='mb-4 text-sm leading-6 text-slate-600'>
+          <p className='mb-4 text-sm leading-6 text-slate-600 dark:text-gray-300'>
             {EVIDENCE_CONFIG.sidebar.description}
           </p>
           <TagGroups
