@@ -1,20 +1,35 @@
 import { siteConfig } from '@/lib/config'
 import SmartLink from '@/components/SmartLink'
+import { useRouter } from 'next/router'
 import CONFIG from '../config'
 import NotionIcon from './NotionIcon'
 import TagItemMini from './TagItemMini'
 import { resolveEvidenceType } from '../evidence.helpers'
 
-const normalizeTagItems = post => {
-  if (Array.isArray(post?.tagItems) && post.tagItems.length > 0) {
-    return post.tagItems
+const normalizeTagItems = (post, pathname) => {
+  let items = Array.isArray(post?.tagItems) && post.tagItems.length > 0
+    ? [...post.tagItems]
+    : Array.isArray(post?.tags) && post.tags.length > 0
+      ? post.tags.slice(0, 3).map(name => ({ name }))
+      : []
+
+  if (pathname === '/recommended-reading') {
+    const recommendedTag = items.find(tag => tag?.name === '推荐')
+    if (recommendedTag) {
+      items = [recommendedTag, ...items.filter(tag => tag?.name !== '推荐')]
+    }
   }
 
-  if (Array.isArray(post?.tags) && post.tags.length > 0) {
-    return post.tags.slice(0, 3).map(name => ({ name }))
+  if (pathname === '/growth-notes') {
+    const growthTag = items.find(
+      tag => tag?.name === '随笔' || tag?.name === '思考'
+    )
+    if (growthTag) {
+      items = [growthTag, ...items.filter(tag => tag?.name !== growthTag.name)]
+    }
   }
 
-  return []
+  return items
 }
 
 const resolveDateLabel = post => {
@@ -36,8 +51,10 @@ const resolveDateLabel = post => {
 }
 
 const BlogPostCard = ({ post, compact = true }) => {
+  const router = useRouter()
   const evidenceType = resolveEvidenceType(post)
-  const topTags = normalizeTagItems(post).slice(0, 1)
+  const allTags = normalizeTagItems(post, router.route)
+  const topTags = allTags.slice(0, 1)
   const dateLabel = resolveDateLabel(post)
   const showSummary = compact
     ? true
@@ -99,9 +116,9 @@ const BlogPostCard = ({ post, compact = true }) => {
             {topTags.map(tag => (
               <TagItemMini key={tag.name} tag={tag} />
             ))}
-            {Array.isArray(post?.tagItems) && post.tagItems.length > topTags.length && (
+            {allTags.length > topTags.length && (
               <span className='inline-flex items-center rounded-md border border-dashed border-slate-200 px-2 py-0.5 text-[11px] text-slate-400 dark:border-gray-600 dark:text-gray-500'>
-                +{post.tagItems.length - topTags.length}
+                +{allTags.length - topTags.length}
               </span>
             )}
           </div>
