@@ -21,7 +21,7 @@ import { isBrowser } from '@/lib/utils'
 import { Transition } from '@headlessui/react'
 import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import BlogPostArchive from './components/BlogPostArchive'
 import BlogPostListPage from './components/BlogPostListPage'
 import BlogPostListScroll from './components/BlogPostListScroll'
@@ -64,6 +64,7 @@ const LayoutBase = props => {
   // 全屏模式下的最大宽度
   const { fullWidth, isDarkMode } = useGlobal()
   const router = useRouter()
+  const isArticleLayout = Boolean(props.post)
   const hiddenPostHeaderRoutes = new Set([
     '/interview-reading',
     '/series',
@@ -97,7 +98,11 @@ const LayoutBase = props => {
   const slotRight =
     router.route === '/404' || fullWidth ? null : <SideRight {...props} />
 
-  const maxWidth = fullWidth ? 'max-w-[96rem] mx-auto' : 'max-w-[86rem]' // 普通最大宽度是86rem和顶部菜单栏对齐，留空则与窗口对齐
+  const maxWidth = fullWidth
+    ? 'max-w-[96rem] mx-auto'
+    : isArticleLayout
+      ? 'max-w-[92rem]'
+      : 'max-w-[86rem]' // 文章页放宽桌面容器，让正文获得更多横向空间
 
   const HEO_HERO_BODY_REVERSE = siteConfig(
     'HEO_HERO_BODY_REVERSE',
@@ -123,11 +128,17 @@ const LayoutBase = props => {
       {/* 主区块 */}
       <main
         id='wrapper-outer'
-        className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5`}>
+        className={`flex-grow w-full ${maxWidth} mx-auto relative md:px-5 ${isArticleLayout ? 'xl:px-2' : ''}`}>
         <div
           id='container-inner'
-          className={`${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} w-full mx-auto lg:flex justify-center relative z-10`}>
-          <div className={`w-full h-auto ${className || ''}`}>
+          className={`${isArticleLayout ? 'xl:grid xl:grid-cols-[15.5rem_minmax(0,1fr)] xl:items-start xl:gap-6' : `${HEO_HERO_BODY_REVERSE ? 'flex-row-reverse' : ''} lg:flex justify-center`} w-full mx-auto relative z-10`}>
+          {isArticleLayout && slotRight ? (
+            <div className='hidden xl:block xl:justify-self-start'>
+              {slotRight}
+            </div>
+          ) : null}
+
+          <div className={`w-full h-auto ${className || ''} ${isArticleLayout ? 'xl:min-w-0' : ''}`}>
             {slotTop}
             {children}
             {slotRight ? (
@@ -137,9 +148,9 @@ const LayoutBase = props => {
             ) : null}
           </div>
 
-          <div className='lg:px-2'></div>
+          {isArticleLayout ? null : <div className='lg:px-2'></div>}
 
-          <div className='hidden xl:block'>
+          <div className={`hidden xl:block ${isArticleLayout ? 'xl:hidden' : ''}`}>
             {/* 主区快右侧 */}
             {slotRight}
           </div>
@@ -344,13 +355,6 @@ const LayoutSlug = props => {
   const { post, lock, validPassword } = props
   const { locale, fullWidth } = useGlobal()
 
-  const [hasCode, setHasCode] = useState(false)
-
-  useEffect(() => {
-    const hasCode = document.querySelectorAll('[class^="language-"]').length > 0
-    setHasCode(hasCode)
-  }, [])
-
   const commentEnable =
     siteConfig('COMMENT_TWIKOO_ENV_ID') ||
     siteConfig('COMMENT_WALINE_SERVER_URL') ||
@@ -386,12 +390,12 @@ const LayoutSlug = props => {
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-5xl'} ${hasCode ? 'xl:w-[73.15vw]' : ''} bg-white dark:bg-[#18171d] dark:border-gray-600 lg:border rounded-2xl lg:px-2 lg:py-4`}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-none'} bg-white dark:bg-[#18171d] dark:border-gray-600 lg:border rounded-2xl lg:px-2 lg:py-4`}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
         {!lock && post && (
-          <div className='mx-auto md:w-full md:px-5'>
+          <div className='mx-auto w-full md:px-5 xl:px-6'>
             {/* 文章主体 */}
             <article
               id='article-wrapper'
