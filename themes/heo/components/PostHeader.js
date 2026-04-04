@@ -56,7 +56,7 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
       <div
         id='post-info'
         className='absolute inset-x-0 top-1/2 z-10 flex -translate-y-1/2 flex-col space-y-4 w-full max-w-[86rem] px-5'>
-          {/* 分类 + 标签 + 时间 */}
+          {/* 分类 + 标签 */}
           <div className='flex justify-center md:justify-start items-center gap-3 flex-wrap'>
             {post.category && (
               <SmartLink
@@ -87,16 +87,6 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                   </SmartLink>
                 ))}
               </div>
-            )}
-
-            {post?.type !== 'Page' && post?.publishDay && (
-              <SmartLink
-                href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
-                passHref
-                className='cursor-pointer whitespace-nowrap text-sm text-gray-200 hover:text-white hover:underline'>
-                <i className='fa-regular fa-calendar'></i>{' '}
-                {post?.publishDay}
-              </SmartLink>
             )}
           </div>
 
@@ -131,6 +121,16 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                   <i className='fa-regular fa-calendar-check'></i>{' '}
                   {post.lastEditedDay}
                 </div>
+              )}
+
+              {post?.type !== 'Page' && post?.publishDay && (
+                <SmartLink
+                  href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
+                  passHref
+                  className='pl-1 mr-2 cursor-pointer hover:underline'>
+                  <i className='fa-regular fa-calendar'></i>{' '}
+                  {post?.publishDay}
+                </SmartLink>
               )}
             </div>
 
