@@ -1,63 +1,29 @@
 import Card from './Card'
 import Catalog from './Catalog'
-import { InfoCard } from './InfoCard'
-import TagGroups from './TagGroups'
-import EVIDENCE_CONFIG from '../evidence.config'
 
 /**
  * Right sidebar for desktop
  */
 export default function SideRight(props) {
-  const { post, tagOptions, currentTag, rightAreaSlot, mobile = false } = props
+  const { post, tagOptions, currentTag, mobile = false } = props
 
   if (mobile) {
     return (
-      <div className='space-y-4'>
-        <InfoCard {...props} />
-        <Card className='bg-white border-slate-200 shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
-          <div className='mb-3 text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-gray-400'>
-            {EVIDENCE_CONFIG.sidebar.title}
-          </div>
-          <p className='mb-4 text-sm leading-6 text-slate-600 dark:text-gray-300'>
-            {EVIDENCE_CONFIG.sidebar.description}
-          </p>
-          <TagGroups
-            tags={tagOptions || []}
-            currentTag={currentTag}
-            names={EVIDENCE_CONFIG.sidebar.tags}
-          />
-        </Card>
-      </div>
+      <></>
     )
   }
 
+  if (!post || !post.toc || post.toc.length < 1) {
+    return null
+  }
+
   return (
-    <div id='sideRight' className='hidden xl:block w-64 space-y-4 h-full'>
-      <InfoCard {...props} />
-
-      {post && post.toc && post.toc.length > 0 && (
-        <div className='sticky top-20'>
-          <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
-            <Catalog toc={post.toc} />
-          </Card>
-        </div>
-      )}
-
-      <Card className='wow fadeInUp bg-white border-slate-200 shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
-        <div className='mb-3 text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-gray-400'>
-          {EVIDENCE_CONFIG.sidebar.title}
-        </div>
-        <p className='mb-4 text-sm leading-6 text-slate-600 dark:text-gray-300'>
-          {EVIDENCE_CONFIG.sidebar.description}
-        </p>
-        <TagGroups
-          tags={tagOptions || []}
-          currentTag={currentTag}
-          names={EVIDENCE_CONFIG.sidebar.tags}
-        />
-      </Card>
-
-      {rightAreaSlot}
+    <div id='sideRight' className='hidden xl:block w-[21rem] 2xl:w-[22rem] h-full'>
+      <div className='sticky top-20'>
+        <Card className='wow fadeInUp h-[calc(100vh-6rem)] bg-white border-slate-200 shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
+          <Catalog toc={post.toc} />
+        </Card>
+      </div>
     </div>
   )
 }
