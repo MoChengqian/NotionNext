@@ -116,13 +116,6 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                     />
                   </div>
                 )}
-              {post?.lastEditedDay && (
-                <div className='pl-1 mr-2'>
-                  <i className='fa-regular fa-calendar-check'></i>{' '}
-                  {post.lastEditedDay}
-                </div>
-              )}
-
               {post?.type !== 'Page' && post?.publishDay && (
                 <SmartLink
                   href={`/archive#${formatDateFmt(post?.publishDate, 'yyyy-MM')}`}
@@ -131,6 +124,13 @@ export default function PostHeader({ post, siteInfo, isDarkMode }) {
                   <i className='fa-regular fa-calendar'></i>{' '}
                   {post?.publishDay}
                 </SmartLink>
+              )}
+
+              {post?.lastEditedDay && (
+                <div className='pl-1 mr-2'>
+                  <i className='fa-regular fa-calendar-check'></i>{' '}
+                  {post.lastEditedDay}
+                </div>
               )}
             </div>
 
