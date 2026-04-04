@@ -32,7 +32,7 @@ import Header from './components/Header'
 import LatestPostsGroup from './components/LatestPostsGroup'
 import PageLead from './components/PageLead'
 import PostAdjacent from './components/PostAdjacent'
-import PostCopyright from './components/PostCopyright'
+import PostBottomNav from './components/PostBottomNav'
 import PostHeader from './components/PostHeader'
 import { PostLock } from './components/PostLock'
 import PostRecommend from './components/PostRecommend'
@@ -415,8 +415,7 @@ const LayoutSlug = props => {
 
               {post?.type === 'Post' && (
                 <div className='px-5 pb-2'>
-                  {/* 版权 */}
-                  <PostCopyright {...props} />
+                  <PostBottomNav />
                   <div className='mt-4 border-t border-dashed border-slate-200 pt-4 dark:border-gray-700'>
                     <ShareBar post={post} />
                   </div>
