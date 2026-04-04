@@ -219,7 +219,7 @@ export const EVIDENCE_CONFIG = {
   },
   sidebar: {
     title: '主线主题词',
-    description: '平台后端,努力向模型服务接入与治理基础设施靠近',
+    description: '平台/基础设施后端,向模型服务接入与治理基础设施探索',
     tags: ['dubbo', 'ai-gateway']
   },
   evidenceTypes: [

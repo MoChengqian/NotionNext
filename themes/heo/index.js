@@ -189,7 +189,7 @@ const LayoutIndex = props => {
         <section className='mb-4 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 shadow-none dark:border-gray-700 dark:bg-[#202026] md:px-5'>
           <div className='px-1'>
             <div className='text-xs uppercase tracking-[0.16em] text-slate-500 dark:text-gray-400'>
-              页面区块
+              欢迎来到我的博客!
             </div>
             <h2 className='mt-1 text-lg font-semibold text-slate-900 dark:text-white md:text-xl'>
               {readingOrderSection.title}
