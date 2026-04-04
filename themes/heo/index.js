@@ -390,7 +390,7 @@ const LayoutSlug = props => {
   return (
     <>
       <div
-        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-none'} bg-white dark:bg-[#18171d] dark:border-gray-600 lg:border rounded-2xl lg:px-2 lg:py-4`}>
+        className={`article h-full w-full ${fullWidth ? '' : 'xl:max-w-[60rem] 2xl:max-w-[64rem] xl:mx-auto'} bg-white dark:bg-[#18171d] dark:border-gray-600 lg:border rounded-2xl lg:px-2 lg:py-4`}>
         {/* 文章锁 */}
         {lock && <PostLock validPassword={validPassword} />}
 
