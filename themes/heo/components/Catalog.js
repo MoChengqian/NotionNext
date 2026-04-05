@@ -23,11 +23,10 @@ const Catalog = ({ toc }) => {
           ...tocItem,
           id,
           key: id || `toc-${index}`,
-          sourceIndentLevel: tocItem.indentLevel || 0,
-          indentLevel: Math.max(0, (tocItem.indentLevel || 0) - 2)
+          indentLevel: tocItem.indentLevel || 0
         }
       })
-      .filter(tocItem => (tocItem?.sourceIndentLevel || 0) >= 2)
+      .filter(tocItem => (tocItem?.indentLevel || 0) <= 2)
       .filter(Boolean)
   }, [toc])
 
