@@ -97,15 +97,28 @@ const Catalog = ({ toc }) => {
       return
     }
 
-    const targetTop = Math.max(
-      0,
-      activeItem.offsetTop - container.clientHeight * 0.35
-    )
     const maxScrollTop = Math.max(
       0,
       container.scrollHeight - container.clientHeight
     )
-    const nextScrollTop = Math.min(targetTop, maxScrollTop)
+    const viewportTop = container.scrollTop
+    const viewportHeight = container.clientHeight
+    const viewportBottom = viewportTop + viewportHeight
+    const itemTop = activeItem.offsetTop
+    const itemBottom = itemTop + activeItem.offsetHeight
+    const upperThreshold = viewportTop + viewportHeight * 0.22
+    const lowerThreshold = viewportBottom - viewportHeight * 0.32
+
+    let nextScrollTop = viewportTop
+
+    // 当前目录项接近底部时，提前上推目录，露出后面的新内容。
+    if (itemBottom > lowerThreshold) {
+      nextScrollTop = itemTop - viewportHeight * 0.45
+    } else if (itemTop < upperThreshold) {
+      nextScrollTop = itemTop - viewportHeight * 0.18
+    }
+
+    nextScrollTop = Math.max(0, Math.min(nextScrollTop, maxScrollTop))
 
     if (Math.abs(container.scrollTop - nextScrollTop) < 4) {
       return
@@ -120,7 +133,7 @@ const Catalog = ({ toc }) => {
   }
 
   return (
-    <div className='flex h-full min-h-0 flex-col px-3 pb-1 pt-[4.5rem] text-black dark:text-white'>
+    <div className='flex h-full min-h-0 flex-col px-3 py-1 text-black dark:text-white'>
       <div className='w-full shrink-0'>
         <i className='mr-1 fas fa-stream' />
         {locale.COMMON.TABLE_OF_CONTENTS}
