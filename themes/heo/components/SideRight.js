@@ -1,4 +1,3 @@
-import Card from './Card'
 import Catalog from './Catalog'
 
 /**
@@ -20,9 +19,9 @@ export default function SideRight(props) {
   return (
     <div id='sideRight' className='hidden xl:block w-[21rem] 2xl:w-[22rem] h-full'>
       <div className='sticky top-0'>
-        <Card className='wow fadeInUp h-screen bg-white border-slate-200 shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
+        <div className='card wow fadeInUp flex h-screen flex-col overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm lg:p-5 p-4 dark:border-gray-700 dark:bg-[#1e1e1e]'>
           <Catalog toc={post.toc} />
-        </Card>
+        </div>
       </div>
     </div>
   )

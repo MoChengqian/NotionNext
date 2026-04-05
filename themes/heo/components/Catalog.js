@@ -31,14 +31,6 @@ const Catalog = ({ toc }) => {
   }, [toc])
 
   // 监听滚动事件
-  useEffect(() => {
-    window.addEventListener('scroll', actionSectionScrollSpy)
-    actionSectionScrollSpy()
-    return () => {
-      window.removeEventListener('scroll', actionSectionScrollSpy)
-    }
-  }, [])
-
   // 目录自动滚动
   const tRef = useRef(null)
   const tocItemRefs = useRef({})
@@ -48,6 +40,7 @@ const Catalog = ({ toc }) => {
 
   // 同步选中目录事件
   const [activeSection, setActiveSection] = useState(null)
+  const [activeProgress, setActiveProgress] = useState(0)
 
   useEffect(() => {
     visibleTocIdsRef.current = new Set(tocEntries.map(item => item.id))
@@ -57,30 +50,69 @@ const Catalog = ({ toc }) => {
   const actionSectionScrollSpy = useCallback(
     throttle(() => {
       const sections = document.getElementsByClassName('notion-h')
-      let prevBBox = null
-      let currentSectionId =
-        activeSectionRef.current || firstVisibleTocIdRef.current
+      const visibleSections = []
+
       for (let i = 0; i < sections.length; ++i) {
         const section = sections[i]
         if (!section || !(section instanceof Element)) continue
         const sectionId = section.getAttribute('data-id')
-        const bbox = section.getBoundingClientRect()
+        if (!sectionId || !visibleTocIdsRef.current.has(sectionId)) continue
+        visibleSections.push({
+          id: sectionId,
+          bbox: section.getBoundingClientRect()
+        })
+      }
+
+      if (visibleSections.length < 1) {
+        return
+      }
+
+      let prevBBox = null
+      let currentSectionId =
+        activeSectionRef.current || firstVisibleTocIdRef.current
+      let currentIndex = 0
+
+      for (let i = 0; i < visibleSections.length; ++i) {
+        const { id: sectionId, bbox } = visibleSections[i]
         const prevHeight = prevBBox ? bbox.top - prevBBox.bottom : 0
         const offset = Math.max(150, prevHeight / 4)
         // GetBoundingClientRect returns values relative to viewport
         if (bbox.top - offset < 0) {
-          if (sectionId && visibleTocIdsRef.current.has(sectionId)) {
-            currentSectionId = sectionId
-          }
+          currentSectionId = sectionId
+          currentIndex = i
           prevBBox = bbox
           continue
         }
         // No need to continue loop, if last element has been detected
         break
       }
+
+      const currentSection = visibleSections[currentIndex]
+      const nextSection = visibleSections[currentIndex + 1]
+      let nextProgress = 0
+
+      if (currentSection && nextSection) {
+        const anchorTop = Math.max(140, window.innerHeight * 0.2)
+        const sectionSpan = Math.max(
+          nextSection.bbox.top - currentSection.bbox.top,
+          1
+        )
+        nextProgress = (anchorTop - currentSection.bbox.top) / sectionSpan
+        nextProgress = Math.max(0, Math.min(nextProgress, 1))
+      }
+
       setActiveSection(currentSectionId)
-    }, 200)
+      setActiveProgress(nextProgress)
+    }, 120)
   , [])
+
+  useEffect(() => {
+    window.addEventListener('scroll', actionSectionScrollSpy)
+    actionSectionScrollSpy()
+    return () => {
+      window.removeEventListener('scroll', actionSectionScrollSpy)
+    }
+  }, [actionSectionScrollSpy])
 
   useEffect(() => {
     activeSectionRef.current = activeSection
@@ -97,27 +129,25 @@ const Catalog = ({ toc }) => {
       return
     }
 
+    const activeIndex = tocEntries.findIndex(item => item.id === activeSection)
+    const nextItem =
+      activeIndex >= 0
+        ? tocItemRefs.current?.[tocEntries[activeIndex + 1]?.id]
+        : null
     const maxScrollTop = Math.max(
       0,
       container.scrollHeight - container.clientHeight
     )
-    const viewportTop = container.scrollTop
     const viewportHeight = container.clientHeight
-    const viewportBottom = viewportTop + viewportHeight
-    const itemTop = activeItem.offsetTop
-    const itemBottom = itemTop + activeItem.offsetHeight
-    const upperThreshold = viewportTop + viewportHeight * 0.22
-    const lowerThreshold = viewportBottom - viewportHeight * 0.32
+    const currentTop = activeItem.offsetTop
+    let targetItemTop = currentTop
 
-    let nextScrollTop = viewportTop
-
-    // 当前目录项接近底部时，提前上推目录，露出后面的新内容。
-    if (itemBottom > lowerThreshold) {
-      nextScrollTop = itemTop - viewportHeight * 0.45
-    } else if (itemTop < upperThreshold) {
-      nextScrollTop = itemTop - viewportHeight * 0.18
+    if (nextItem) {
+      targetItemTop =
+        currentTop + (nextItem.offsetTop - currentTop) * activeProgress
     }
 
+    let nextScrollTop = targetItemTop - viewportHeight * 0.3
     nextScrollTop = Math.max(0, Math.min(nextScrollTop, maxScrollTop))
 
     if (Math.abs(container.scrollTop - nextScrollTop) < 4) {
@@ -125,7 +155,7 @@ const Catalog = ({ toc }) => {
     }
 
     container.scrollTop = nextScrollTop
-  }, [activeSection])
+  }, [activeProgress, activeSection, tocEntries])
 
   // 无目录就直接返回空
   if (!tocEntries || tocEntries.length < 1) {
