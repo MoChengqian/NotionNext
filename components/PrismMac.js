@@ -39,6 +39,8 @@ const PrismMac = () => {
   const codeCollapseExpandDefault = siteConfig('CODE_COLLAPSE_EXPAND_DEFAULT')
 
   useEffect(() => {
+    let cleanupMermaid = null
+
     if (codeMacBar) {
       loadExternalResource('/css/prism-mac-style.css', 'css')
     }
@@ -57,9 +59,13 @@ const PrismMac = () => {
       }
 
       renderPrismMac(codeLineNumbers)
-      renderMermaid(mermaidCDN)
+      cleanupMermaid = renderMermaid(mermaidCDN, isDarkMode)
       renderCollapseCode(codeCollapse, codeCollapseExpandDefault)
     })
+
+    return () => {
+      cleanupMermaid?.()
+    }
   }, [router, isDarkMode])
 
   return <></>
@@ -160,43 +166,99 @@ const renderCollapseCode = (codeCollapse, codeCollapseExpandDefault) => {
 /**
  * 将mermaid语言 渲染成图片
  */
-const renderMermaid = mermaidCDN => {
-  const observer = new MutationObserver(mutationsList => {
-    for (const m of mutationsList) {
-      if (m.target.className === 'notion-code language-mermaid') {
-        const chart = m.target.querySelector('code').textContent
-        if (chart && !m.target.querySelector('.mermaid')) {
-          const mermaidChart = document.createElement('pre')
-          mermaidChart.className = 'mermaid'
-          mermaidChart.innerHTML = chart
-          m.target.appendChild(mermaidChart)
+const renderMermaid = (mermaidCDN, isDarkMode) => {
+  const article = document.querySelector('#notion-article')
+  if (!article) {
+    return () => {}
+  }
+
+  let disposed = false
+
+  const renderAllMermaidBlocks = () => {
+    const mermaidBlocks = article.querySelectorAll('.notion-code.language-mermaid')
+    if (!mermaidBlocks?.length) {
+      return
+    }
+
+    loadExternalResource(mermaidCDN, 'js').then(() => {
+      if (disposed) {
+        return
+      }
+
+      const mermaid = window?.mermaid
+      if (!mermaid) {
+        return
+      }
+
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'loose',
+        theme: isDarkMode ? 'dark' : 'default'
+      })
+
+      const pendingRenderNodes = []
+
+      for (const block of mermaidBlocks) {
+        const codeNode = block.querySelector('code')
+        const chart = codeNode?.textContent?.trim()
+        if (!chart) {
+          continue
         }
 
-        const mermaidsSvg = document.querySelectorAll('.mermaid')
-        if (mermaidsSvg) {
-          let needLoad = false
-          for (const e of mermaidsSvg) {
-            if (e?.firstChild?.nodeName !== 'svg') {
-              needLoad = true
-            }
-          }
-          if (needLoad) {
-            loadExternalResource(mermaidCDN, 'js').then(url => {
-              setTimeout(() => {
-                const mermaid = window.mermaid
-                mermaid?.contentLoaded()
-              }, 100)
-            })
-          }
+        let renderNode = block.querySelector('.notion-mermaid-render')
+        if (!renderNode) {
+          renderNode = document.createElement('div')
+          renderNode.className = 'notion-mermaid-render mermaid overflow-x-auto'
+          block.appendChild(renderNode)
         }
+
+        const lastSource = block.getAttribute('data-mermaid-source')
+        const lastTheme = block.getAttribute('data-mermaid-theme')
+        if (
+          lastSource === chart &&
+          lastTheme === (isDarkMode ? 'dark' : 'default') &&
+          renderNode.querySelector('svg')
+        ) {
+          continue
+        }
+
+        block.classList.remove('line-numbers')
+        block.style.whiteSpace = 'normal'
+        block.style.overflowX = 'auto'
+        block.style.paddingBottom = '1rem'
+        codeNode.style.display = 'none'
+
+        renderNode.textContent = chart
+        block.setAttribute('data-mermaid-source', chart)
+        block.setAttribute(
+          'data-mermaid-theme',
+          isDarkMode ? 'dark' : 'default'
+        )
+        pendingRenderNodes.push(renderNode)
       }
-    }
+
+      if (pendingRenderNodes.length > 0) {
+        mermaid.run({
+          nodes: pendingRenderNodes
+        })
+      }
+    }).catch(() => {})
+  }
+
+  renderAllMermaidBlocks()
+
+  const observer = new MutationObserver(() => {
+    renderAllMermaidBlocks()
   })
-  if (document.querySelector('#notion-article')) {
-    observer.observe(document.querySelector('#notion-article'), {
-      attributes: true,
-      subtree: true
-    })
+
+  observer.observe(article, {
+    childList: true,
+    subtree: true
+  })
+
+  return () => {
+    disposed = true
+    observer.disconnect()
   }
 }
 
