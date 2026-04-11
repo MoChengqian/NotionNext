@@ -204,24 +204,24 @@ const LayoutIndex = props => {
           <Card className='border-slate-200 bg-white shadow-sm dark:border-gray-700 dark:bg-[#1e1e1e]'>
             <div
               className={`grid gap-5 ${readingEntryPanel && readingWelcomePanel
-                ? 'xl:grid-cols-[minmax(0,1fr)_minmax(0,0.82fr)_15rem] xl:items-center'
+                ? 'xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)_15rem] xl:items-stretch'
                 : readingEntryPanel
-                  ? 'xl:grid-cols-[minmax(0,1fr)_17.5rem] xl:items-center'
+                  ? 'xl:grid-cols-[minmax(0,1fr)_17.5rem] xl:items-stretch'
                   : ''}`}>
-              <div className='space-y-4 xl:pr-2'>
-                <h2 className='text-lg font-semibold text-slate-900 dark:text-white md:text-xl'>
+              <div className='order-1 rounded-2xl border border-slate-300 bg-white px-5 py-5 shadow-sm ring-1 ring-slate-100 dark:border-gray-600 dark:bg-[#24232a] dark:ring-white/5 xl:order-2 xl:px-6'>
+                <h2 className='text-xl font-semibold text-slate-950 dark:text-white md:text-2xl'>
                   {readingOrderSection.title}
                 </h2>
-                <ol className='space-y-3'>
+                <ol className='mt-5 space-y-3.5'>
                   {readingOrderSection.items?.map((item, index) => (
                     <li
                       key={`home-reading-order-${index}`}
                       className='flex gap-3'>
-                      <div className='mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-700 dark:bg-[#25242b] dark:text-gray-200'>
+                      <div className='mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-slate-900 text-xs font-semibold text-white dark:bg-white dark:text-slate-900'>
                         {index + 1}
                       </div>
                       <div>
-                        <div className='text-sm font-semibold text-slate-900 dark:text-white'>
+                        <div className='text-base font-semibold text-slate-950 dark:text-white'>
                           {item.title || item}
                         </div>
                         {item.summary && (
@@ -236,14 +236,14 @@ const LayoutIndex = props => {
               </div>
 
               {readingWelcomePanel ? (
-                <section className='flex h-full flex-col justify-center rounded-xl border border-slate-200 bg-slate-50/70 px-5 py-4 dark:border-gray-700 dark:bg-[#25242b]/80'>
+                <section className='order-2 flex h-full flex-col justify-center rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-4 shadow-none dark:border-gray-700 dark:bg-[#25242b]/70 xl:order-1'>
                   {readingWelcomePanel.eyebrow && (
                     <div className='text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-gray-400'>
                       {readingWelcomePanel.eyebrow}
                     </div>
                   )}
 
-                  <h3 className='mt-1 text-lg font-semibold text-slate-900 dark:text-white'>
+                  <h3 className='mt-1 text-base font-semibold text-slate-900 dark:text-white'>
                     {readingWelcomePanel.title}
                   </h3>
 
@@ -274,7 +274,7 @@ const LayoutIndex = props => {
               ) : null}
 
               {readingEntryPanel ? (
-                <aside className='rounded-xl border border-slate-200 bg-slate-50 px-4 py-4 shadow-none dark:border-gray-700 dark:bg-[#25242b]'>
+                <aside className='order-3 rounded-xl border border-slate-200 bg-slate-50/60 px-4 py-4 shadow-none dark:border-gray-700 dark:bg-[#25242b]/70'>
                   {readingEntryPanel.eyebrow && (
                     <div className='text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-gray-400'>
                       {readingEntryPanel.eyebrow}
