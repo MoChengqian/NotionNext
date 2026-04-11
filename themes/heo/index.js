@@ -200,9 +200,9 @@ const LayoutIndex = props => {
     <div id='post-outer-wrapper' className='px-5 md:px-0'>
       {readingOrderSection ? (
         <section className='mb-4 rounded-xl border border-slate-200 bg-white px-4 py-3 shadow-none dark:border-gray-700 dark:bg-[#202026] md:px-5'>
-          <div
-            className={`grid gap-5 ${readingEntryPanel && readingWelcomePanel
-              ? 'xl:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)_15rem] xl:items-stretch'
+            <div
+              className={`grid gap-5 ${readingEntryPanel && readingWelcomePanel
+              ? 'xl:grid-cols-[minmax(0,0.58fr)_minmax(0,1.42fr)_15rem] xl:items-stretch'
               : readingEntryPanel
                 ? 'xl:grid-cols-[minmax(0,1fr)_17.5rem] xl:items-stretch'
                 : ''}`}>
