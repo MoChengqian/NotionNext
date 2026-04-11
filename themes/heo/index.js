@@ -206,7 +206,7 @@ const LayoutIndex = props => {
               : readingEntryPanel
                 ? 'xl:grid-cols-[minmax(0,1fr)_17.5rem] xl:items-stretch'
                 : ''}`}>
-              <div className='order-1 rounded-2xl border border-slate-300 bg-white px-5 py-5 shadow-sm ring-1 ring-slate-100 dark:border-gray-600 dark:bg-[#24232a] dark:ring-white/5 xl:order-2 xl:px-6'>
+              <div className='order-1 rounded-2xl border border-slate-300 bg-white px-5 py-5 shadow-sm ring-1 ring-slate-100 dark:border-gray-600 dark:bg-[#24232a] dark:ring-white/5 xl:order-2 xl:pl-10 xl:pr-6'>
                 <h2 className='text-xl font-semibold text-slate-950 dark:text-white md:text-2xl'>
                   {readingOrderSection.title}
                 </h2>
